@@ -6,10 +6,17 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import android.app.Application.*;
+import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private TabLayout tabLayout;
@@ -68,7 +75,40 @@ public class MainActivity extends AppCompatActivity {
         //viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
     }
+
+    class imageAdapter extends BaseAdapter{
+        ArrayList<galleryitem> items = new ArrayList<galleryitem>();
+        @Override
+        public int getCount() {
+            return items.size();
+        }
+
+        public void addItem(galleryitem singerItem){
+            items.add(singerItem);
+        }
+
+        @Override
+        public galleryitem getItem(int i) {
+            return items.get(i);
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return i;
+        }
+
+        @Override
+        public View getView(int i, View view, ViewGroup viewGroup) {
+            imageviewer singerViewer = new imageviewer(getApplicationContext());
+//            imageviewer singerViewer = new imageviewer(this);
+            singerViewer.setItem(items.get(i));
+            return singerViewer;
+        }
+    }
+
 }
+
+
 
 
 
