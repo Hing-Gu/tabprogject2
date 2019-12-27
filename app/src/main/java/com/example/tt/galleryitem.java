@@ -3,7 +3,7 @@ package com.example.tt;
 public class galleryitem {
     private int image;
 
-    public galleryitem( int image) {
+    public galleryitem(int image) {
         this.image = image;
     }
 

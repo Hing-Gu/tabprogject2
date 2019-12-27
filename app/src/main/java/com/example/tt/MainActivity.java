@@ -9,9 +9,11 @@ import androidx.viewpager.widget.ViewPager;
 import android.app.Application.*;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.GridView;
 
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
@@ -23,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
    // private ViewPager viewPager;
     private TabItem tab1, tab2,  tab3;
     public PageAdapter pagerAdapter;
+    private GridView gridView;
+    private imageAdapter imgAdapter;
 
 
     @Override
@@ -36,10 +40,19 @@ public class MainActivity extends AppCompatActivity {
         tab1=(TabItem)findViewById(R.id.tab1);
         tab2=(TabItem)findViewById(R.id.tab2);
         tab3=(TabItem)findViewById(R.id.tab3);
+        gridView = (GridView)findViewById(R.id.mygalleryid);
         //viewPager = findViewById(R.id.viewpager);
 
 
         pagerAdapter =new PageAdapter(getSupportFragmentManager(),tabLayout.getTabCount());
+
+        imgAdapter = new imageAdapter();
+        imgAdapter.addItem(new galleryitem(R.drawable.ic_launcher_background));
+        Log.d("MainActivity",Integer.toString(imgAdapter.getCount()));
+        imgAdapter.addItem(new galleryitem(R.drawable.ic_launcher_background));
+        Log.d("MainActivity",Integer.toString(imgAdapter.getCount()));
+        gridView.setAdapter(imgAdapter);
+        Log.d("MainActivity","CCC");
         //viewPager.setAdapter(pagerAdapter);
 
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -77,7 +90,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     class imageAdapter extends BaseAdapter{
-        ArrayList<galleryitem> items = new ArrayList<galleryitem>();
+//        ArrayList<galleryitem> items = new ArrayList<galleryitem>();
+        ArrayList<galleryitem> items = new ArrayList<>();
         @Override
         public int getCount() {
             return items.size();
