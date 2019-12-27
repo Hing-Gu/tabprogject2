@@ -1,6 +1,8 @@
 package com.example.tt;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
@@ -11,7 +13,7 @@ import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity {
     private TabLayout tabLayout;
-    private ViewPager viewPager;
+   // private ViewPager viewPager;
     private TabItem tab1, tab2,  tab3;
     public PageAdapter pagerAdapter;
 
@@ -27,16 +29,16 @@ public class MainActivity extends AppCompatActivity {
         tab1=(TabItem)findViewById(R.id.tab1);
         tab2=(TabItem)findViewById(R.id.tab2);
         tab3=(TabItem)findViewById(R.id.tab3);
-        viewPager = findViewById(R.id.viewpager);
+        //viewPager = findViewById(R.id.viewpager);
 
 
         pagerAdapter =new PageAdapter(getSupportFragmentManager(),tabLayout.getTabCount());
-        viewPager.setAdapter(pagerAdapter);
+        //viewPager.setAdapter(pagerAdapter);
 
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
+                //viewPager.setCurrentItem(tab.getPosition());
                 if(tab.getPosition()==0) {
                     pagerAdapter.notifyDataSetChanged();
                 }else if(tab.getPosition()==1) {
@@ -57,8 +59,13 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fm.beginTransaction();
+        fragmentTransaction.add(R.id.frame, new tab1());
+        fragmentTransaction.add(R.id.frame, new tab2());
+        fragmentTransaction.add(R.id.frame, new tab3());
+        fragmentTransaction.commit();
+        //viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
     }
 }
