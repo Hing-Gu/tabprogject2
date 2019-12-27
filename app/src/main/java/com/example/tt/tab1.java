@@ -1,13 +1,20 @@
 package com.example.tt;
 
 
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.provider.ContactsContract;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.ArrayList;
+
 public class tab1 extends Fragment {
 
 
@@ -25,3 +32,4 @@ public class tab1 extends Fragment {
     }
 
 }
+    

@@ -1,12 +1,11 @@
 package com.example.tt;
 
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
-
-import android.os.Bundle;
 
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
@@ -39,13 +38,21 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 //viewPager.setCurrentItem(tab.getPosition());
+                Fragment fr = null;
                 if(tab.getPosition()==0) {
-                    pagerAdapter.notifyDataSetChanged();
+                    //pagerAdapter.notifyDataSetChanged();
+                    fr = new tab1();
                 }else if(tab.getPosition()==1) {
-                    pagerAdapter.notifyDataSetChanged();
+                    //pagerAdapter.notifyDataSetChanged();
+                    fr = new tab2();
                 } else if(tab.getPosition()==2){
-                            pagerAdapter.notifyDataSetChanged();
+                   // pagerAdapter.notifyDataSetChanged();
+                    fr = new tab3();
                 }
+                FragmentManager fm = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                fragmentTransaction.replace(R.id.frame,fr);
+                fragmentTransaction.commit();
 
             }
 
@@ -62,8 +69,6 @@ public class MainActivity extends AppCompatActivity {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.add(R.id.frame, new tab1());
-        fragmentTransaction.add(R.id.frame, new tab2());
-        fragmentTransaction.add(R.id.frame, new tab3());
         fragmentTransaction.commit();
         //viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
