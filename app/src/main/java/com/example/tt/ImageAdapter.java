@@ -16,8 +16,8 @@ public class ImageAdapter extends BaseAdapter {
 
     // Keep all Images in array
     public Integer[] mThumbIds = {
-            R.drawable.maxresdefault , R.drawable.maxresdefault
-            ,R.drawable.maxresdefault, R.drawable.maxresdefault
+            R.drawable.maxresdefault , R.drawable.cross
+            ,R.drawable.maxresdefault, R.drawable.cross
             ,R.drawable.maxresdefault, R.drawable.maxresdefault
             ,R.drawable.maxresdefault, R.drawable.maxresdefault
             ,R.drawable.maxresdefault, R.drawable.maxresdefault

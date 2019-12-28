@@ -31,15 +31,15 @@ public class tab2_photo extends Fragment {
 
         exit = v.findViewById(R.id.exitbtn);
 
-//        exit.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(){
-//                FragmentManager fm = getActivity().getSupportFragmentManager();
-////                FragmentTransaction fragmentTransaction = fm.beginTransaction();
-//                fm.popBackStack();
-////                fragmentTransaction.replace();
-//            }
-//        });
+        exit.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                FragmentManager fm = getActivity().getSupportFragmentManager();
+//                FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                fm.popBackStack();
+//                fragmentTransaction.replace();
+            }
+        });
         return v;
     }
 }
