@@ -1,6 +1,10 @@
 package com.example.tt;
 
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -9,6 +13,9 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private TabLayout tabLayout;
@@ -73,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
         //viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
     }
+   // private List<PhoneBook> phoneBooks= getContacts(this);//context가 뭘까
 }
 
 
