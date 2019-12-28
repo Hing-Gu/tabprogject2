@@ -44,32 +44,32 @@ public class ImageAdapter extends BaseAdapter {
         mContext = c;
     }
 
-//    private void pickFromGallery(){
-//        Intent intent = new Intent(Intent.ACTION_PICK);
-//        intent.setType("images/*");
-//        String[] mimeTypes = {"images/jpeg","images/png"};
-//        intent.putExtra(Intent.EXTRA_MIME_TYPES,mimeTypes);
-//        startActivityForResult(intent, GALLERY_REQUEST_CODE);
-//    }
-//
-//    public void onActivityResult(int requestCode, int resultCode, Intent data){
-//        if (resultCode == Activity.RESULT_OK){
-//            switch (requestCode){
-//                case GALLERY_REQUEST_CODE:
-//                    Uri selectedImage = data.getData();
-//
-//                    String[] filePathColumn = {MediaStore.Images.Media.DATA};
-//                    Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-//                    cursor.moveToFirst();
-//                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-//                    String imgDecodableString = cursor.getString(columnIndex);
-//
-//                    cursor.close();
-//
-//                    break;
-//            }
-//        }
-//    }
+    private void pickFromGallery(){
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("images/*");
+        String[] mimeTypes = {"images/jpeg","images/png"};
+        intent.putExtra(Intent.EXTRA_MIME_TYPES,mimeTypes);
+        startActivityForResult(intent, GALLERY_REQUEST_CODE);
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        if (resultCode == Activity.RESULT_OK){
+            switch (requestCode){
+                case GALLERY_REQUEST_CODE:
+                    Uri selectedImage = data.getData();
+
+                    String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                    Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+                    cursor.moveToFirst();
+                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                    String imgDecodableString = cursor.getString(columnIndex);
+
+                    cursor.close();
+
+                    break;
+            }
+        }
+    }
 
     @Override
     public int getCount() {
