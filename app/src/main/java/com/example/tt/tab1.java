@@ -76,7 +76,7 @@ public class tab1 extends Fragment{
         // 다른 앱에 데이터를 제공할 수 있도록 하고 싶으면 ContentProvider 를 설정
         // 핸드폰 기본 앱 들 중 데이터가 존재하는 앱들은 Content Provider 를 갖는다
         // ContentResolver 는 ContentProvider 를 가져오는 통신 수단
-        ContentResolver resolver = context.getActivity().getContentResolver();
+        ContentResolver resolver = getActivity().getContentResolver();
         // 2. 전화번호가 저장되어 있는 테이블 주소값(Uri)을 가져오기
         Uri phoneUri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
 
@@ -138,8 +138,8 @@ public class tab1 extends Fragment{
         cursor.close();
         Log.d("list",datas.toString());
 
-        ListView MyListView = getView().findViewById(R.id.tab1);
-        SimpleAdapter adapter = new SimpleAdapter(getContext().getApplicationContext(), datas2,R.layout.fragment_tab1,new String[]{"name","Tel"},new int[]{R.id.textView2,R.id.textView3});
+        ListView MyListView = view.findViewById(R.id.list);
+        SimpleAdapter adapter = new SimpleAdapter(getActivity(), datas2,R.layout.textview,new String[]{"name","Tel"},new int[]{R.id.textView2,R.id.textView3});
         MyListView.setAdapter(adapter);
 
 
@@ -147,4 +147,3 @@ public class tab1 extends Fragment{
     }
 
 }
-
