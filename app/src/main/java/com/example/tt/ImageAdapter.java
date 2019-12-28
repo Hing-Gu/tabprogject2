@@ -19,6 +19,16 @@ public class ImageAdapter extends BaseAdapter {
             R.drawable.maxresdefault , R.drawable.maxresdefault
             ,R.drawable.maxresdefault, R.drawable.maxresdefault
             ,R.drawable.maxresdefault, R.drawable.maxresdefault
+            ,R.drawable.maxresdefault, R.drawable.maxresdefault
+            ,R.drawable.maxresdefault, R.drawable.maxresdefault
+            ,R.drawable.maxresdefault, R.drawable.maxresdefault
+            ,R.drawable.maxresdefault, R.drawable.maxresdefault
+            ,R.drawable.maxresdefault, R.drawable.maxresdefault
+            ,R.drawable.maxresdefault, R.drawable.maxresdefault
+            ,R.drawable.maxresdefault, R.drawable.maxresdefault
+            ,R.drawable.maxresdefault, R.drawable.maxresdefault
+            ,R.drawable.maxresdefault, R.drawable.maxresdefault
+
     };
 
     // Constructor
@@ -46,7 +56,8 @@ public class ImageAdapter extends BaseAdapter {
         ImageView imageView = new ImageView(mContext);
         imageView.setImageResource(mThumbIds[position]);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        imageView.setLayoutParams(new GridView.LayoutParams(70, 70));
+//        imageView.setLayoutParams(new GridView.LayoutParams(70, 70));
+        imageView.setLayoutParams(new GridView.LayoutParams(250, 250));
         return imageView;
     }
 
