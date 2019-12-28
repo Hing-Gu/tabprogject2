@@ -18,9 +18,10 @@ import androidx.annotation.Nullable;
 
 import static androidx.core.app.ActivityCompat.startActivityForResult;
 
+
 public class ImageAdapter extends BaseAdapter {
     private Context mContext;
-
+    static final int GALLERY_REQUEST_CODE = 1;
     // Keep all Images in array
     public Integer[] mThumbIds = {
             R.drawable.maxresdefault , R.drawable.cross
