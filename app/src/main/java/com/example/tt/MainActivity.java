@@ -1,10 +1,5 @@
 package com.example.tt;
-
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -19,7 +14,6 @@ public class MainActivity extends AppCompatActivity {
     private TabLayout tabLayout;
    // private ViewPager viewPager;
     private TabItem tab1, tab2,  tab3;
-    public PageAdapter pagerAdapter;
 
 
 
@@ -35,24 +29,15 @@ public class MainActivity extends AppCompatActivity {
         //viewPager = findViewById(R.id.viewpager);
 
 
-        pagerAdapter =new PageAdapter(getSupportFragmentManager(),tabLayout.getTabCount());
-
-
-
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                Log.d("MainActivity","tabselectlistener");
-                //viewPager.setCurrentItem(tab.getPosition());
                 Fragment fr = null;
                 if(tab.getPosition()==0) {
-                    //pagerAdapter.notifyDataSetChanged();
                     fr = new tab1();
                 }else if(tab.getPosition()==1) {
-                    //pagerAdapter.notifyDataSetChanged();
                     fr = new tab2();
                 } else if(tab.getPosition()==2){
-                   // pagerAdapter.notifyDataSetChanged();
                     fr = new tab3();
                 }
                 FragmentManager fm = getSupportFragmentManager();
