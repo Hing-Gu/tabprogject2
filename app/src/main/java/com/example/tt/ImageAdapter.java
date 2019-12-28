@@ -1,6 +1,11 @@
 package com.example.tt;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
+
+import static androidx.core.app.ActivityCompat.startActivityForResult;
 
 public class ImageAdapter extends BaseAdapter {
     private Context mContext;
@@ -33,8 +40,36 @@ public class ImageAdapter extends BaseAdapter {
 
     // Constructor
     public ImageAdapter(Context c){
+
         mContext = c;
     }
+
+//    private void pickFromGallery(){
+//        Intent intent = new Intent(Intent.ACTION_PICK);
+//        intent.setType("images/*");
+//        String[] mimeTypes = {"images/jpeg","images/png"};
+//        intent.putExtra(Intent.EXTRA_MIME_TYPES,mimeTypes);
+//        startActivityForResult(intent, GALLERY_REQUEST_CODE);
+//    }
+//
+//    public void onActivityResult(int requestCode, int resultCode, Intent data){
+//        if (resultCode == Activity.RESULT_OK){
+//            switch (requestCode){
+//                case GALLERY_REQUEST_CODE:
+//                    Uri selectedImage = data.getData();
+//
+//                    String[] filePathColumn = {MediaStore.Images.Media.DATA};
+//                    Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+//                    cursor.moveToFirst();
+//                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+//                    String imgDecodableString = cursor.getString(columnIndex);
+//
+//                    cursor.close();
+//
+//                    break;
+//            }
+//        }
+//    }
 
     @Override
     public int getCount() {
