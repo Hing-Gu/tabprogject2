@@ -27,7 +27,7 @@ public class tab2_photo extends Fragment {
         View v = inflater.inflate(R.layout.fragment_tab2_photo, container, false);
         selected_image = v.findViewById(R.id.selected_photo);
         selected_image.setImageResource(img_int);
-        selected_image.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        selected_image.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
 
         exit = v.findViewById(R.id.exitbtn);
 

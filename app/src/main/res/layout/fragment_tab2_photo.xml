@@ -21,7 +21,6 @@
         android:id="@+id/selected_photo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="30dp"
         android:layout_gravity="center"></ImageView>
     </LinearLayout>
     
