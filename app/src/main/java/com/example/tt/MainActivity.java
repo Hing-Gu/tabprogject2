@@ -21,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
     private TabLayout tabLayout;
    // private ViewPager viewPager;
     private TabItem tab1, tab2,  tab3;
-    public PageAdapter pagerAdapter;
 
 
     @Override
@@ -38,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
         //viewPager = findViewById(R.id.viewpager);
 
 
-        pagerAdapter =new PageAdapter(getSupportFragmentManager(),tabLayout.getTabCount());
         //viewPager.setAdapter(pagerAdapter);
 
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -80,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         //viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
     }
-   // private List<PhoneBook> phoneBooks= getContacts(this);//context가 뭘까
+
 }
 
 
