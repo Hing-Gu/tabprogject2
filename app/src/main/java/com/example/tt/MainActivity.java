@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+                Log.d("MainActivity","tabselectlistener");
                 //viewPager.setCurrentItem(tab.getPosition());
                 Fragment fr = null;
                 if(tab.getPosition()==0) {
@@ -75,7 +76,6 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.add(R.id.frame, new tab1());
         fragmentTransaction.commit();
-        //viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
     }
 
