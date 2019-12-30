@@ -63,10 +63,7 @@ public class ImageAdapter extends BaseAdapter {
 
         String[] projection = { MediaStore.MediaColumns.DATA,
                 MediaStore.Images.Media.BUCKET_DISPLAY_NAME };
-//        String[] projection = { MediaStore.MediaColumns.DATA};
-
-        cursor = context.getContentResolver().query(uri, projection, null,
-                null, null);
+        cursor = context.getContentResolver().query(uri, projection, null, null, null);
 
         column_index_data = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
         column_index_folder_name = cursor
@@ -75,7 +72,6 @@ public class ImageAdapter extends BaseAdapter {
 //        cursor.moveToFirst();
 
         while (cursor.moveToNext()) {
-//            PathOfImage = uri.toString() + "/"+cursor.getString(column_index_data);
             PathOfImage = cursor.getString(column_index_data);
             listOfAllImages.add(PathOfImage);
         }
@@ -87,41 +83,50 @@ public class ImageAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-//        return mThumbIds.length;
-        return pathList.size();
+        return mThumbIds.length;
+//        return pathList.size();
     }
 
     @Override
     public Object getItem(int position) {
-//        return mThumbIds[position];
-        return pathList.get(position);
+        try {
+            return mThumbIds[position];
+        }catch(Exception ArrayIndexOutOfBoundsExcetion){
+            return -1;
+        }
+//        return pathList.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+//        return 0;
+        return position;
+//        return mThumbIds[position];
     }
+
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ImageView imageView = new ImageView(mContext);
-//        imageView.setImageResource(mThumbIds[position]);
         ArrayList<String> urilist = getImagesPath(mContext);
 
-//        imageView.setImageBitmap(BitmapFactory.decodeFile(imgDecodableString));
-        if (position < urilist.size()){
-            Uri new_uri = Uri.parse(urilist.get(position));
-//            imageView.setImageURI(Uri.parse(urilist.get(position)));
-            Bitmap bitmap = BitmapFactory.decodeFile(urilist.get(position));
-            imageView.setImageBitmap(bitmap);
-
-            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+//        if (position < urilist.size()){
+////            Uri new_uri = Uri.parse(urilist.get(position));
+////            Log.d("ImageAdapter",urilist.get(position));
+////            imageView.setImageURI(Uri.parse(urilist.get(position)));
+//
+//            imageView.setImageResource(mThumbIds[position]);
+//            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+////        imageView.setLayoutParams(new GridView.LayoutParams(70, 70));
+//            imageView.setLayoutParams(new GridView.LayoutParams(250, 250));
+//        }
+//        else{
+//            Log.d("getView",Integer.toString(position));
+//        }
+        imageView.setImageResource(mThumbIds[position]);
+        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 //        imageView.setLayoutParams(new GridView.LayoutParams(70, 70));
-            imageView.setLayoutParams(new GridView.LayoutParams(250, 250));
-        }
-        else{
-            Log.d("getView",Integer.toString(position));
-        }
+        imageView.setLayoutParams(new GridView.LayoutParams(250, 250));
         return imageView;
     }
 

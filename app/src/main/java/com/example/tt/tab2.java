@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
@@ -49,7 +50,9 @@ public class tab2 extends Fragment {
                 FragmentManager fm = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fm.beginTransaction();
                 //Casting getitem value to integer -> can be vurnerable.
-                Fragment newFragment = new tab2_photo((Integer) imgAdapter.getItem(position));
+                Fragment newFragment = new tab2_photo(position, imgAdapter);
+//                FragmentStatePagerAdapter swipe = DemoCollectionPagerAdapter(fm);
+
                 fragmentTransaction.replace(R.id.frame, newFragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
