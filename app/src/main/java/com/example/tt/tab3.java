@@ -1,7 +1,9 @@
 package com.example.tt;
 
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.AssetManager;
 import android.os.Bundle;
 
@@ -12,6 +14,8 @@ import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkError;
@@ -26,34 +30,31 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.poifs.filesystem.POIFSFileSystem;
-import org.apache.poi.ss.formula.functions.Column;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-
-import java.io.FileInputStream;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Array;
-import java.text.DateFormat;
+import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
+import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class tab3 extends Fragment {
-
+    String city = "";
+    String sector = "";
+    final Set<String> cities = new LinkedHashSet<>();
+    final Set<String> sectors = new LinkedHashSet<>();
+    location loc;
+    HashMap<Pair<String,String>,Pair<String,String>> loc_hashmap;
 
     public tab3() {
         // Required empty public constructor
@@ -67,13 +68,85 @@ public class tab3 extends Fragment {
         View view = inflater.inflate(R.layout.fragment_tab3, container, false);
         weather cur_weather = new weather(container.getContext());
         String cur = cur_weather.getinfo();
-        location loc = new location(getActivity().getApplicationContext());
-        HashMap<Pair<String,String>,Pair<String,String>> loc_hashmap = loc.makeLocationList();
-        
 
-        return inflater.inflate(R.layout.fragment_tab3, container, false);
+        final Button citybtn = view.findViewById(R.id.citybtn);
+        final Button sectorbtn = view.findViewById(R.id.sectorbtn);
+        loc = new location(getActivity().getApplicationContext());
+        loc_hashmap = loc.makeLocationList();
+
+        for (Pair<String, String> elem: loc_hashmap.keySet()){
+            cities.add(elem.first);
+        }
+
+        citybtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View btn_view) {
+                sectors.clear();
+                show(cities, citybtn);
+        }
+        });
+        sectorbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View btn_view) {
+                if (sectors.isEmpty()){
+                    Toast.makeText(getActivity().getApplicationContext(), "광역시/도 를 먼저 선택해주세요.", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    show_1(sectors, sectorbtn);
+                }
+            }
+        });
+
+        return view;
+    }
+    void show(Set<String> cities, final Button btn_view){
+        final List<String> ListItems = new ArrayList<>();
+        for (String elem: cities){
+            ListItems.add(elem);
+        }
+
+        final CharSequence[] items =  ListItems.toArray(new String[ListItems.size()]);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("광역시/도 를 고르십시오.");
+
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int pos) {
+                String selectedText = items[pos].toString();
+                Toast.makeText(getActivity().getApplicationContext(), selectedText, Toast.LENGTH_SHORT).show();
+                city = selectedText;
+                btn_view.setText(city);
+                for (Pair<String, String> elem: loc_hashmap.keySet()){
+                    if (elem.first.equals(city)){
+                        sectors.add(elem.second);
+                    }
+                }
+            }
+        });
+        builder.show();
     }
 
+    void show_1(Set<String> sectors, final Button btn_view){
+        final List<String> ListItems = new ArrayList<>();
+        for (String elem: sectors){
+            ListItems.add(elem);
+        }
+
+        final CharSequence[] items =  ListItems.toArray(new String[ListItems.size()]);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("구/군/면 을 고르십시오.");
+
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int pos) {
+                String selectedText = items[pos].toString();
+                Toast.makeText(getActivity().getApplicationContext(), selectedText, Toast.LENGTH_SHORT).show();
+                sector = selectedText;
+                btn_view.setText(sector);
+            }
+        });
+        builder.show();
+    }
 }
 
 
@@ -96,7 +169,7 @@ class weather {
     }
 
     public String getinfo(){
-        String request = "http://newsky2.kma.go.kr/service/SecndSrtpdFrcstInfoService2/ForecastGrib";
+        String request = ";http://newsky2.kma.go.kr/service/SecndSrtpdFrcstInfoService2/ForecastGrib"
         request += "?ServiceKey="+ServiceKey;
         request += "&base_date="+base_date;
         request += "&base_time="+base_time;
@@ -150,72 +223,124 @@ class location{
     public location(Context context){
         mContext = context;
     }
-    public HashMap<Pair<String, String>, Pair<String,String>> makeLocationList()
-    {
-        AssetManager am = mContext.getAssets();
+    public HashMap<Pair<String, String>, Pair<String,String>> makeLocationList(){
+        try{
+            AssetManager am = mContext.getAssets();
+            StringBuilder returnString = new StringBuilder();
+            InputStream fIn = null;
+            InputStreamReader isr = null;
+            BufferedReader input = null;
+            String raw;
+            HashMap<Pair<String, String>, Pair<String,String>> result = new HashMap<>();
 
-        InputStream is = null;
-        try {
-            is = am.open("location.xlsx");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        POIFSFileSystem myFileSystem = null;
-        try {
-            myFileSystem = new POIFSFileSystem(is);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        HSSFWorkbook myWorkBook = null;
-        try {
-            myWorkBook = new HSSFWorkbook(myFileSystem);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        HSSFSheet mySheet = myWorkBook.getSheetAt(0);
-
-        Iterator<Row> rowIter = mySheet.rowIterator();
-        int rowno = 0;
-
-        //Create empty hashmap
-        HashMap<Pair<String, String>, Pair<String,String>> tmp_hashmap = new HashMap<>();
-
-        while (rowIter.hasNext()) {
-            Log.e("location", " row no "+ rowno );
-
-            HSSFRow myRow = (HSSFRow) rowIter.next();
-            if(rowno !=0) {
-                Iterator<Cell> cellIter = myRow.cellIterator();
-                int colno =0;
-                String city="", sector="", det="";
-                while (cellIter.hasNext()) {
-                    HSSFCell myCell = (HSSFCell) cellIter.next();
-                    if (colno==0){
-                        city = myCell.toString();
-                    }else if (colno==1){
-                        sector = myCell.toString();
-                    }
-
-                    Pair<String, String> tmp_key = Pair.create(city, sector);
-                    if (city.equals("") && sector.equals("") && !tmp_hashmap.containsKey(tmp_key)){
-                        myCell = (HSSFCell)cellIter.next();
-                        myCell = (HSSFCell)cellIter.next();
-                        String x = myCell.toString();
-                        myCell = (HSSFCell)cellIter.next();
-                        String y = myCell.toString();
-                        Pair<String, String> tmp_value = Pair.create(x, y);
-                        tmp_hashmap.put(tmp_key,tmp_value);
-                        Log.e("location",  tmp_key.toString() + ":" + tmp_value.toString());
-                    }
-                    colno++;
-                }
+            fIn = am.open("location.txt", Context.MODE_WORLD_READABLE);
+            isr = new InputStreamReader(fIn);
+            input = new BufferedReader(isr);
+            String line = "";
+            while ((line = input.readLine()) != null) {
+                Log.d("tab3",line);
+                returnString.append(line);
+                returnString.append(" ");
             }
-            rowno++;
+            raw = returnString.toString();
+            String[] parsing = raw.split("\\s");
+            Log.d("tab3",Integer.toString(parsing.length));
+            while(Arrays.asList(parsing).contains("")){
+                List<String> list = new ArrayList<>(Arrays.asList(parsing));
+                list.remove("");
+                parsing = list.toArray(new String[list.size()]);
+            }
+            Log.d("tab3",Integer.toString(parsing.length));
+
+
+            for (int i = 0; i < parsing.length; i = i + 4){
+                Log.d("tab3",parsing[i]);
+                Log.d("tab3",parsing[i+1]);
+                Log.d("tab3",parsing[i+2]);
+                Log.d("tab3",parsing[i+3]);
+                Log.d("tab3",Integer.toString(i/4));
+                Pair<String,String> tmp_key = Pair.create(parsing[i],parsing[i+1]);
+                Pair<String,String> tmp_value = Pair.create(parsing[i+2],parsing[i+3]);
+//                Log.d("tmp_key",tmp_key.toString());
+//                Log.d("tmp_value",tmp_value.toString());
+                result.put(tmp_key,tmp_value);
+            }
+            Log.d("tab3",result.toString());
+            if (isr != null) isr.close();
+            if (fIn != null) fIn.close();
+            if (input != null) input.close();
+
+            return result;
+        }
+        catch (IOException e){
+            e.printStackTrace();
+            return null;
         }
 
-        return tmp_hashmap;
+
+
+//        InputStream is = null;
+//        try {
+//            is = am.open("location.txt");
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//        POIFSFileSystem myFileSystem = null;
+//        try {
+//            myFileSystem = new POIFSFileSystem(is);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//        HSSFWorkbook myWorkBook = null;
+//        try {
+//            myWorkBook = new HSSFWorkbook(myFileSystem);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//        HSSFSheet mySheet = myWorkBook.getSheetAt(0);
+//
+//        Iterator<Row> rowIter = mySheet.rowIterator();
+//        int rowno = 0;
+//
+//        //Create empty hashmap
+//        HashMap<Pair<String, String>, Pair<String,String>> tmp_hashmap = new HashMap<>();
+//
+//        while (rowIter.hasNext()) {
+//            Log.e("location", " row no "+ rowno );
+//
+//            HSSFRow myRow = (HSSFRow) rowIter.next();
+//            if(rowno !=0) {
+//                Iterator<Cell> cellIter = myRow.cellIterator();
+//                int colno =0;
+//                String city="", sector="", det="";
+//                while (cellIter.hasNext()) {
+//                    HSSFCell myCell = (HSSFCell) cellIter.next();
+//                    if (colno==0){
+//                        city = myCell.toString();
+//                    }else if (colno==1){
+//                        sector = myCell.toString();
+//                    }
+//
+//                    Pair<String, String> tmp_key = Pair.create(city, sector);
+//                    if (city.equals("") && sector.equals("") && !tmp_hashmap.containsKey(tmp_key)){
+//                        myCell = (HSSFCell)cellIter.next();
+//                        myCell = (HSSFCell)cellIter.next();
+//                        String x = myCell.toString();
+//                        myCell = (HSSFCell)cellIter.next();
+//                        String y = myCell.toString();
+//                        Pair<String, String> tmp_value = Pair.create(x, y);
+//                        tmp_hashmap.put(tmp_key,tmp_value);
+//                        Log.e("location",  tmp_key.toString() + ":" + tmp_value.toString());
+//                    }
+//                    colno++;
+//                }
+//            }
+//            rowno++;
+//        }
+
+//        return tmp_hashmap;
     }
 }

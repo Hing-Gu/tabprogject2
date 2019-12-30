@@ -1,14 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".tab3">
 
     <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <Button
+            android:text="광역시/도"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/citybtn"></Button>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/sectorbtn"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="구/군/면"></Button>>
+    </LinearLayout>
+
+
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="3" />
 
-</FrameLayout>
+</LinearLayout>
