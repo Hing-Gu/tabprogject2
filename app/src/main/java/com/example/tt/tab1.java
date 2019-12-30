@@ -136,7 +136,6 @@ public class tab1 extends Fragment{
 
 
         cursor.close();
-        Log.d("list",datas.toString());
 
         ListView MyListView = view.findViewById(R.id.list);
         SimpleAdapter adapter = new SimpleAdapter(getActivity(), datas2,R.layout.textview,new String[]{"name","Tel"},new int[]{R.id.textView2,R.id.textView3});
