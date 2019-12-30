@@ -20,6 +20,7 @@ import org.jsoup.select.Elements;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 
 /**
@@ -27,7 +28,7 @@ import java.io.IOException;
  */
 public class tab3 extends Fragment {
 
-
+    private TextView weather_text;
     private Object TextView;
 
     public tab3() {
@@ -38,8 +39,7 @@ public class tab3 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                             Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        TextView weather_text;
-        getActivity().setContentView(R.layout.activity_main);
+
 
         View view= inflater.inflate(R.layout.fragment_tab3, container, false);
         weather_text = view.findViewById(R.id.weather);
@@ -65,11 +65,11 @@ class WeatherAsynTask extends AsyncTask<String,Void,String> {
         String result = "";
 
         try {
-            Document document1 = Jsoup.connect(URL).get();
-            Document document2 = Jsoup.connect(URL).post();
+            Document document = Jsoup.connect(URL).get();
+            /*Document document2 = Jsoup.connect(URL).post();
             Connection.Response response = Jsoup.connect(URL).method(Connection.Method.GET).execute();
-            Document document3 = response.parse();
-            Elements elements = document3.select(EI);
+            Document document3 = response.parse();*/
+            Elements elements = document.select(EI);
 
             for (Element element : elements) {
                 String tem;
@@ -78,8 +78,8 @@ class WeatherAsynTask extends AsyncTask<String,Void,String> {
                     result=result+" "+tem;
 
                 }
+
             }
-            Log.d("test",result);
             return result;
         }catch (IOException e){
             e.printStackTrace();
@@ -90,5 +90,12 @@ class WeatherAsynTask extends AsyncTask<String,Void,String> {
     protected void onPostExecute(String s){
         super.onPostExecute(s);
         textView.setText(s);
+
+        Log.d("test",s);
+       String[] array_word;
+        array_word = s.split(" ");
+        for(int p=0;p<array_word.length;p++){
+            Log.d("test",array_word[p]) ;
+        }
     }
 }
