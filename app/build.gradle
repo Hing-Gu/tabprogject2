@@ -1,3 +1,7 @@
+plugins{
+    id "com.github.johnrengelman.shadow" version "1.2.4"
+}
+
 apply plugin: 'com.android.application'
 
 android {
@@ -5,18 +9,24 @@ android {
     buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "com.example.tt"
-        minSdkVersion 15
+//        minSdkVersion 15
+        minSdkVersion 26
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+}
+
+configurations {
+    compile.extendsFrom shadow
 }
 
 dependencies {
@@ -28,4 +38,17 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'com.google.android.material:material:1.0.0'
+    implementation 'com.android.volley:volley:1.1.1'
+    implementation project(path: ':poi-4.1.1')
+    shadow group: 'org.apache.commons', name: 'commons-math3', version: '3.6.1'
 }
+
+jar.enabled = false
+build.dependsOn shadowJar
+
+shadowJar {
+    classifier = null
+    configurations = [project.configurations.shadow]
+    relocate('org.apache', 'net.kevinmendoza.geoworldlibrary.util.org.apache')
+}
+
