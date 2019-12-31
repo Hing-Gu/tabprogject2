@@ -23,14 +23,42 @@
                 android:id="@+id/sectorbtn"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="구/군/면"></Button>>
+                android:text="시/구/군/면"></Button>>
     </LinearLayout>
 
-
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="3" />
+    <LinearLayout
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <ImageView
+            android:layout_height="200dp"
+            android:layout_width="200dp"
+            android:id="@+id/weathericon" />
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:id="@+id/amount_rain"/>
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:id="@+id/wind_mag"/>
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:id="@+id/wind_dir"/>
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:id="@+id/humidity"/>
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:id="@+id/temp"/>
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:id="@+id/type_rain"/>
+    </LinearLayout>
 
 </LinearLayout>
