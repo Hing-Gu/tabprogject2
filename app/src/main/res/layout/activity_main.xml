@@ -10,30 +10,30 @@
     android:orientation="vertical">
 
 
+
     <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:id="@+id/tabs"
-        >
+        android:background="@color/colorPrimary">
 
         <com.google.android.material.tabs.TabItem
+            android:id="@+id/tab1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="tab1"
-            android:id="@+id/tab1"/>
+            android:text="tab1" />
 
         <com.google.android.material.tabs.TabItem
+            android:id="@+id/tab2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="tab2"
-            android:id="@+id/tab2"/>
+            android:text="tab2" />
 
         <com.google.android.material.tabs.TabItem
+            android:id="@+id/tab3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="tab3"
-            android:id="@+id/tab3"/>
+            android:text="tab3" />
     </com.google.android.material.tabs.TabLayout>
 
     <FrameLayout
