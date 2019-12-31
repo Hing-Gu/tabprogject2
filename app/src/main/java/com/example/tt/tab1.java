@@ -133,15 +133,11 @@ public class tab1 extends Fragment{
 
             datas2.add(hashMap1);
         }
-
-
         cursor.close();
 
         ListView MyListView = view.findViewById(R.id.list);
         SimpleAdapter adapter = new SimpleAdapter(getActivity(), datas2,R.layout.textview,new String[]{"name","Tel"},new int[]{R.id.textView2,R.id.textView3});
         MyListView.setAdapter(adapter);
-
-
         return view;
     }
 

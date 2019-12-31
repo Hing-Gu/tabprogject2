@@ -1,7 +1,10 @@
 package com.example.tt;
 
 
+import android.app.Activity;
 import android.app.Application;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -9,6 +12,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +24,7 @@ import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 
@@ -29,6 +34,7 @@ import java.util.ArrayList;
 public class tab2 extends Fragment {
     private ImageAdapter imgAdapter;
     private GridView gridView;
+    final int REQUEST_TAKE_ALBUM = 1;
 
     public tab2() {
         // Required empty public constructor
@@ -60,6 +66,37 @@ public class tab2 extends Fragment {
         });
 //        return inflater.inflate(R.layout.fragment_tab2, container, false);
         return v;
+    }
+
+    private void getAlbum(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
+            try{
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType("image/*");
+//                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+                startActivityForResult(intent, REQUEST_TAKE_ALBUM);
+            }catch(Exception e){
+                Log.e("error",e.toString());
+            }
+        }
+        else{
+            Log.e("kitkat under","..");
+        }
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        Log.i("onActivityResult","CALL");
+        super.onActivityResult(requestCode,resultCode,data);
+        switch(requestCode){
+            case REQUEST_TAKE_ALBUM:
+                Log.i("result",String.valueOf(resultCode));
+                if (resultCode == Activity.RESULT_OK){
+                    data.getData();
+                    Intent intent = new Intent(tab2.this, ImageView.class);``
+
+                }
+        }
     }
 }
 

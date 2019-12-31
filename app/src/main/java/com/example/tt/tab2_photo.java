@@ -18,7 +18,7 @@ import androidx.viewpager.widget.ViewPager;
 public class tab2_photo extends Fragment {
     private ImageView selected_image;
     private ImageButton exit;
-//    private int img_int;
+    private ViewPager viewPager;
     private int position;
     private ImageAdapter ImageAdapter;
     public static final String ARG_OBJECT = "object";
@@ -32,12 +32,16 @@ public class tab2_photo extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-//        View v = inflater.inflate(R.layout.fragment_tab2_photo, container, false);
-        View v = inflater.inflate(R.layout.fragment_tab2_photo_element, container, false);
+        View v = inflater.inflate(R.layout.fragment_tab2_photo, container, false);
+//        View v = inflater.inflate(R.layout.fragment_tab2_photo_element, container, false);
         int image_value = 0;
-        selected_image = v.findViewById(R.id.selected_photo);
-        selected_image.setImageResource((int) ImageAdapter.getItem(position));
-        selected_image.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+
+        viewPager = v.findViewById(R.id.pager);
+        SectionPageAdapter adapter = new SectionPageAdapter(getActivity().getSupportFragmentManager());
+
+//        selected_image = v.findViewById(R.id.selected_photo);
+//        selected_image.setImageResource((int) ImageAdapter.getItem(position));
+//        selected_image.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
 
 //        exit = v.findViewById(R.id.exitbtn);
 //

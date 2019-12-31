@@ -1,2 +1,2 @@
-include ':app', ':poi-4.1.1'
+include ':app'
 rootProject.name='tt'

@@ -24,27 +24,28 @@ import java.util.ArrayList;
 import static androidx.core.app.ActivityCompat.startActivityForResult;
 
 
+
 public class ImageAdapter extends BaseAdapter {
     private Context mContext;
     private ArrayList<String> pathList;
     static final int GALLERY_REQUEST_CODE = 1;
     String imgDecodableString;
     // Keep all Images in array
-    public Integer[] mThumbIds = {
-            R.drawable.maxresdefault , R.drawable.cross
-            ,R.drawable.maxresdefault, R.drawable.cross
-            ,R.drawable.maxresdefault, R.drawable.maxresdefault
-            ,R.drawable.maxresdefault, R.drawable.maxresdefault
-            ,R.drawable.maxresdefault, R.drawable.maxresdefault
-            ,R.drawable.maxresdefault, R.drawable.maxresdefault
-            ,R.drawable.maxresdefault, R.drawable.maxresdefault
-            ,R.drawable.maxresdefault, R.drawable.maxresdefault
-            ,R.drawable.maxresdefault, R.drawable.maxresdefault
-            ,R.drawable.maxresdefault, R.drawable.maxresdefault
-            ,R.drawable.maxresdefault, R.drawable.maxresdefault
-            ,R.drawable.maxresdefault, R.drawable.maxresdefault
-
-    };
+//    public Integer[] mThumbIds = {
+//            R.drawable.maxresdefault , R.drawable.cross
+//            ,R.drawable.maxresdefault, R.drawable.cross
+//            ,R.drawable.maxresdefault, R.drawable.maxresdefault
+//            ,R.drawable.maxresdefault, R.drawable.maxresdefault
+//            ,R.drawable.maxresdefault, R.drawable.maxresdefault
+//            ,R.drawable.maxresdefault, R.drawable.maxresdefault
+//            ,R.drawable.maxresdefault, R.drawable.maxresdefault
+//            ,R.drawable.maxresdefault, R.drawable.maxresdefault
+//            ,R.drawable.maxresdefault, R.drawable.maxresdefault
+//            ,R.drawable.maxresdefault, R.drawable.maxresdefault
+//            ,R.drawable.maxresdefault, R.drawable.maxresdefault
+//            ,R.drawable.maxresdefault, R.drawable.maxresdefault
+//
+//    };
 
     // Constructor
     public ImageAdapter(Context c){
@@ -61,8 +62,8 @@ public class ImageAdapter extends BaseAdapter {
         String PathOfImage = null;
         uri = android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
 
-        String[] projection = { MediaStore.MediaColumns.DATA,
-                MediaStore.Images.Media.BUCKET_DISPLAY_NAME };
+        String[] projection = {MediaStore.MediaColumns.DATA,
+                MediaStore.Images.Media.BUCKET_DISPLAY_NAME};
         cursor = context.getContentResolver().query(uri, projection, null, null, null);
 
         column_index_data = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
@@ -83,18 +84,18 @@ public class ImageAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return mThumbIds.length;
-//        return pathList.size();
+//        return mThumbIds.length;
+        return pathList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        try {
-            return mThumbIds[position];
-        }catch(Exception ArrayIndexOutOfBoundsExcetion){
-            return -1;
-        }
-//        return pathList.get(position);
+//        try {
+//            return mThumbIds[position];
+//        }catch(Exception ArrayIndexOutOfBoundsExcetion){
+//            return -1;
+//        }
+        return pathList.get(position);
     }
 
     @Override
@@ -110,20 +111,20 @@ public class ImageAdapter extends BaseAdapter {
         ImageView imageView = new ImageView(mContext);
         ArrayList<String> urilist = getImagesPath(mContext);
 
-//        if (position < urilist.size()){
-////            Uri new_uri = Uri.parse(urilist.get(position));
-////            Log.d("ImageAdapter",urilist.get(position));
-////            imageView.setImageURI(Uri.parse(urilist.get(position)));
-//
+        if (position < urilist.size()){
+            Uri new_uri = Uri.parse(urilist.get(position));
+            Log.d("ImageAdapter",urilist.get(position));
+            imageView.setImageURI(Uri.parse(urilist.get(position)));
+
 //            imageView.setImageResource(mThumbIds[position]);
-//            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-////        imageView.setLayoutParams(new GridView.LayoutParams(70, 70));
-//            imageView.setLayoutParams(new GridView.LayoutParams(250, 250));
-//        }
-//        else{
-//            Log.d("getView",Integer.toString(position));
-//        }
-        imageView.setImageResource(mThumbIds[position]);
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+//        imageView.setLayoutParams(new GridView.LayoutParams(70, 70));
+            imageView.setLayoutParams(new GridView.LayoutParams(250, 250));
+        }
+        else{
+            Log.d("getView",Integer.toString(position));
+        }
+//        imageView.setImageResource(mThumbIds[position]);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 //        imageView.setLayoutParams(new GridView.LayoutParams(70, 70));
         imageView.setLayoutParams(new GridView.LayoutParams(250, 250));

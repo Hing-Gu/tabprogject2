@@ -31,12 +31,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        tabLayout=(TabLayout)findViewById(R.id.tabs);
-        tab1=(TabItem)findViewById(R.id.tab1);
-        tab2=(TabItem)findViewById(R.id.tab2);
-        tab3=(TabItem)findViewById(R.id.tab3);
+        tabLayout = findViewById(R.id.tabs);
+        tab1 = findViewById(R.id.tab1);
+        tab2 = findViewById(R.id.tab2);
+        tab3 = findViewById(R.id.tab3);
 
-        mViewpager = (ViewPager) findViewById(R.id.frame);
+        mViewpager = findViewById(R.id.frame);
         setupViewPager(mViewpager);
 
         tabLayout.setupWithViewPager(mViewpager);
