@@ -17,6 +17,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
+import org.w3c.dom.Text;
 
 
 import java.io.IOException;
@@ -29,6 +30,7 @@ import java.util.ArrayList;
 public class tab3 extends Fragment {
 
     private TextView weather_text;
+    private TextView now_tem;
     private Object TextView;
 
     public tab3() {
@@ -43,8 +45,9 @@ public class tab3 extends Fragment {
 
         View view= inflater.inflate(R.layout.fragment_tab3, container, false);
         weather_text = view.findViewById(R.id.weather);
+        now_tem = view.findViewById(R.id.nowtext);
 
-        new WeatherAsynTask(weather_text).execute("https://weather.naver.com/","span[class=temp]");
+        new WeatherAsynTask(weather_text,now_tem).execute("https://weather.naver.com/","span[class=temp]");
         return view;
     }
 
@@ -52,10 +55,11 @@ public class tab3 extends Fragment {
 
 class WeatherAsynTask extends AsyncTask<String,Void,String> {
     TextView textView;
+    TextView textview2;
 
-    public WeatherAsynTask(TextView textView) {
+    public WeatherAsynTask(TextView textView, TextView textview2) {
+        this.textview2= textview2;
         this.textView = textView;
-
     }
 
     @Override
@@ -89,13 +93,22 @@ class WeatherAsynTask extends AsyncTask<String,Void,String> {
     }
     protected void onPostExecute(String s){
         super.onPostExecute(s);
-        textView.setText(s);
+
 
         Log.d("test",s);
-       String[] array_word;
+        String[] array_word;
+        Log.d("test2",s);
         array_word = s.split(" ");
-        for(int p=0;p<array_word.length;p++){
-            Log.d("test",array_word[p]) ;
+
+        String now = array_word[13];
+        for(int k=14;k<array_word.length-1;k++){
+            Log.d("test"+k,array_word[k]);
+            if(array_word[k].contains("-"));
+            else
+                array_word[k]="\t"+array_word[k];
         }
+        String now2 = array_word[14]+"\n"+array_word[15]+"\n"+array_word[16]+"\n"+array_word[17];
+        textView.setText(now2);
+        textview2.setText(now);
     }
 }

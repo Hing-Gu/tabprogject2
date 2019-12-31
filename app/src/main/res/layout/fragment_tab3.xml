@@ -12,49 +12,27 @@
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/back" />
+        android:src="@drawable/back"
+        />
 
-    <TextView
-        android:id="@+id/text1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="now temp"
-        android:layout_marginTop="25dp"
-        android:textSize="25dp" />
-    <TextView
-        android:id="@+id/text2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="57dp"
-        android:text="today 1"
-        android:textSize="25dp" />
-    <TextView
-        android:id="@+id/text3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="today 2"
-        android:layout_marginTop="89dp"
-        android:textSize="25dp" />
-    <TextView
-        android:id="@+id/text4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="tomorrow 1"
-        android:layout_marginTop="117dp"
-        android:textSize="25dp" />
-    <TextView
-        android:id="@+id/text5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="tomorrow 2"
-        android:layout_marginTop="148dp"
-        android:textSize="25dp" />
 
     <TextView
         android:id="@+id/weather"
-        android:layout_width="100dp"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:textSize="25dp" />
+        android:layout_marginTop="265dp"
+        android:layout_marginLeft="200dp"
+        android:lineSpacingExtra="0.5dp"
+        android:typeface="sans"
+        android:textSize="35dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="80dp"
+        android:layout_marginLeft="90dp"
+        android:layout_marginTop="110dp"
+        android:typeface="sans"
+        android:id="@+id/nowtext"
+        />
 
 </FrameLayout>
