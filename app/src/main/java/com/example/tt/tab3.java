@@ -5,10 +5,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.AssetManager;
 
+import android.app.Activity;
+import android.graphics.Point;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -38,7 +39,13 @@ import com.android.volley.toolbox.Volley;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Document;
+
+import android.app.Activity;
+import android.graphics.Typeface;
+import android.os.Bundle;
+import android.widget.TextView;
 import org.jsoup.select.Elements;
+import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -62,12 +69,22 @@ public class tab3 extends Fragment {
 
     location loc;
     private TextView weather_text;
+    private TextView now_tem;
     private Object TextView;
 
     public tab3() {
         // Required empty public constructor
     }
-
+//    public class FontSampler extends Activity{
+//        @Override
+//        public void onCreate(Bundle icicle) {
+//
+//            super.onCreate(icicle);
+//            setContentView(R.layout.fragment_tab3);
+//            TextView tv = findViewById(R.id.weather);
+//
+//        }
+//    }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -82,8 +99,12 @@ public class tab3 extends Fragment {
         super.onCreate(savedInstanceState);
 
         weather_text = view.findViewById(R.id.weather);
+        now_tem = view.findViewById(R.id.nowtext);
+        Typeface face = Typeface.createFromAsset(getActivity().getAssets(),"fonts/NanumSquareRoundB.ttf");
+        weather_text.setTypeface(face);
+        now_tem.setTypeface(face);
 
-        new WeatherAsynTask(weather_text).execute("https://weather.naver.com/","span[class=temp]");
+        new WeatherAsynTask(weather_text,now_tem).execute("https://weather.naver.com/","span[class=temp]");
 
         citybtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,9 +126,9 @@ public class tab3 extends Fragment {
 
             }
         });
-
         return view;
     }
+
     void show(Set<String> cities, final Button btn_view){
         final List<String> ListItems = new ArrayList<>();
         for (String elem: cities){
@@ -155,10 +176,11 @@ public class tab3 extends Fragment {
 
 class WeatherAsynTask extends AsyncTask<String,Void,String> {
     TextView textView;
+    TextView textview2;
 
-    public WeatherAsynTask(TextView textView) {
+    public WeatherAsynTask(TextView textView, TextView textview2) {
+        this.textview2= textview2;
         this.textView = textView;
-
     }
 
     @Override
@@ -192,15 +214,25 @@ class WeatherAsynTask extends AsyncTask<String,Void,String> {
     }
     protected void onPostExecute(String s){
         super.onPostExecute(s);
-        textView.setText(s);
+
 
         Log.d("test",s);
-       String[] array_word;
+        String[] array_word;
+        Log.d("test2",s);
         array_word = s.split(" ");
-        for(int p=0;p<array_word.length;p++){
-            Log.d("test",array_word[p]) ;
+
+        String now = array_word[13];
+        for(int k=14;k<array_word.length-1;k++){
+            Log.d("test"+k,array_word[k]);
+            if(array_word[k].contains("-"));
+            else
+                array_word[k]="\t"+array_word[k];
         }
+        String now2 = array_word[14]+"\n"+array_word[15]+"\n"+array_word[16]+"\n"+array_word[17];
+        textView.setText(now2);
+        textview2.setText(now);
     }
+
 }
 
 

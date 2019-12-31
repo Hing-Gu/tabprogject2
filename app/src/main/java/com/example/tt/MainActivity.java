@@ -16,6 +16,8 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 
+import org.w3c.dom.Text;
+
 
 public class MainActivity extends AppCompatActivity {
     private TabLayout tabLayout;
@@ -27,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     @SuppressWarnings("ClickableViewAccessibility")
+
+
 
 
     @Override
