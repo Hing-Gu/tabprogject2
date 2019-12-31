@@ -9,11 +9,15 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 
+import org.w3c.dom.Text;
+
 
 public class MainActivity extends AppCompatActivity {
     private TabLayout tabLayout;
    // private ViewPager viewPager;
     private TabItem tab1, tab2,  tab3;
+
+
 
 
 

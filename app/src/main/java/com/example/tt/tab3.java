@@ -1,12 +1,15 @@
 package com.example.tt;
 
 
+import android.app.Activity;
+import android.graphics.Point;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +19,11 @@ import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Document;
+
+import android.app.Activity;
+import android.graphics.Typeface;
+import android.os.Bundle;
+import android.widget.TextView;
 import org.jsoup.select.Elements;
 import org.w3c.dom.Text;
 
@@ -36,7 +44,16 @@ public class tab3 extends Fragment {
     public tab3() {
         // Required empty public constructor
     }
-
+//    public class FontSampler extends Activity{
+//        @Override
+//        public void onCreate(Bundle icicle) {
+//
+//            super.onCreate(icicle);
+//            setContentView(R.layout.fragment_tab3);
+//            TextView tv = findViewById(R.id.weather);
+//
+//        }
+//    }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                             Bundle savedInstanceState) {
@@ -46,7 +63,9 @@ public class tab3 extends Fragment {
         View view= inflater.inflate(R.layout.fragment_tab3, container, false);
         weather_text = view.findViewById(R.id.weather);
         now_tem = view.findViewById(R.id.nowtext);
-
+        Typeface face = Typeface.createFromAsset(getActivity().getAssets(),"fonts/NanumSquareRoundB.ttf");
+        weather_text.setTypeface(face);
+        now_tem.setTypeface(face);
         new WeatherAsynTask(weather_text,now_tem).execute("https://weather.naver.com/","span[class=temp]");
         return view;
     }
@@ -111,4 +130,5 @@ class WeatherAsynTask extends AsyncTask<String,Void,String> {
         textView.setText(now2);
         textview2.setText(now);
     }
+
 }
