@@ -36,10 +36,10 @@
             android:id="@+id/tab3"/>
     </com.google.android.material.tabs.TabLayout>
 
-    <FrameLayout
+    <androidx.viewpager.widget.ViewPager
         android:id="@+id/frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
-    </FrameLayout>
+    </androidx.viewpager.widget.ViewPager>
 </LinearLayout>
