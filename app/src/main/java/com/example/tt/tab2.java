@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,6 +25,7 @@ import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import java.io.File;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
@@ -35,6 +37,7 @@ public class tab2 extends Fragment {
     private ImageAdapter imgAdapter;
     private GridView gridView;
     final int REQUEST_TAKE_ALBUM = 1;
+    String basePath = null;
 
     public tab2() {
         // Required empty public constructor
@@ -47,7 +50,25 @@ public class tab2 extends Fragment {
         View v = inflater.inflate(R.layout.fragment_tab2, container, false);
         gridView = v.findViewById(R.id.mygalleryid);
 
-        imgAdapter = new ImageAdapter(getContext().getApplicationContext());
+        File mediaStorageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+//        File a = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        Log.d("aaa",mediaStorageDir.getPath());
+//        Log.d("basePath",a.getPath());
+//        if (!a.exists()){
+//            if(!a.mkdirs()){
+//                Log.e("tab2","failed to create parent directory");
+//            }
+//        }
+
+        if (!mediaStorageDir.exists()){
+            if(!mediaStorageDir.mkdirs()){
+                Log.e("tab2","failed to create directory");
+            }
+        }
+        basePath = mediaStorageDir.getPath();
+
+
+        imgAdapter = new ImageAdapter(getContext().getApplicationContext(),basePath);
         gridView.setAdapter(imgAdapter);
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -67,37 +88,37 @@ public class tab2 extends Fragment {
 //        return inflater.inflate(R.layout.fragment_tab2, container, false);
         return v;
     }
-
-    private void getAlbum(){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
-            try{
-                Intent intent = new Intent(Intent.ACTION_PICK);
-                intent.setType("image/*");
-//                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-                intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
-                startActivityForResult(intent, REQUEST_TAKE_ALBUM);
-            }catch(Exception e){
-                Log.e("error",e.toString());
-            }
-        }
-        else{
-            Log.e("kitkat under","..");
-        }
-    }
-
-    protected void onActivityResult(int requestCode, int resultCode, Intent data){
-        Log.i("onActivityResult","CALL");
-        super.onActivityResult(requestCode,resultCode,data);
-        switch(requestCode){
-            case REQUEST_TAKE_ALBUM:
-                Log.i("result",String.valueOf(resultCode));
-                if (resultCode == Activity.RESULT_OK){
-                    data.getData();
-                    Intent intent = new Intent(tab2.this, ImageView.class);``
-
-                }
-        }
-    }
+//
+//    private void getAlbum(){
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
+//            try{
+//                Intent intent = new Intent(Intent.ACTION_PICK);
+//                intent.setType("image/*");
+////                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+//                intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+//                startActivityForResult(intent, REQUEST_TAKE_ALBUM);
+//            }catch(Exception e){
+//                Log.e("error",e.toString());
+//            }
+//        }
+//        else{
+//            Log.e("kitkat under","..");
+//        }
+//    }
+//
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+//        Log.i("onActivityResult","CALL");
+//        super.onActivityResult(requestCode,resultCode,data);
+//        switch(requestCode){
+//            case REQUEST_TAKE_ALBUM:
+//                Log.i("result",String.valueOf(resultCode));
+//                if (resultCode == Activity.RESULT_OK){
+//                    data.getData();
+//                    Intent intent = new Intent(tab2.this, ImageView.class);
+//
+//                }
+//        }
+//    }
 }
 
 

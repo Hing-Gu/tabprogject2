@@ -1,11 +1,13 @@
 package com.example.tt;
 
+import android.Manifest;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.FrameLayout;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -35,6 +37,11 @@ public class MainActivity extends AppCompatActivity {
         tab1 = findViewById(R.id.tab1);
         tab2 = findViewById(R.id.tab2);
         tab3 = findViewById(R.id.tab3);
+
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},1);
 
         mViewpager = findViewById(R.id.frame);
         setupViewPager(mViewpager);
