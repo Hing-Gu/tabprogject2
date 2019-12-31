@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.AssetManager;
+
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -33,7 +35,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.w3c.dom.Text;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Element;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -56,13 +61,14 @@ import java.util.Set;
 public class tab3 extends Fragment {
 
     location loc;
+    private TextView weather_text;
+    private Object TextView;
 
     public tab3() {
         // Required empty public constructor
     }
 
 
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -72,6 +78,12 @@ public class tab3 extends Fragment {
         final Button citybtn = view.findViewById(R.id.citybtn);
         final Button sectorbtn = view.findViewById(R.id.sectorbtn);
         loc = new location(getActivity().getApplicationContext(), cur_weather);
+
+        super.onCreate(savedInstanceState);
+
+        weather_text = view.findViewById(R.id.weather);
+
+        new WeatherAsynTask(weather_text).execute("https://weather.naver.com/","span[class=temp]");
 
         citybtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,13 +130,13 @@ public class tab3 extends Fragment {
         builder.show();
     }
 
-    void show_1(Set<String> sectors, final Button btn_view){
+    void show_1(Set<String> sectors, final Button btn_view) {
         final List<String> ListItems = new ArrayList<>();
-        for (String elem: sectors){
+        for (String elem : sectors) {
             ListItems.add(elem);
         }
         ListItems.sort(null);
-        final CharSequence[] items =  ListItems.toArray(new String[ListItems.size()]);
+        final CharSequence[] items = ListItems.toArray(new String[ListItems.size()]);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("시/구/군/면 을 고르십시오.");
@@ -138,6 +150,56 @@ public class tab3 extends Fragment {
             }
         });
         builder.show();
+    }
+}
+
+class WeatherAsynTask extends AsyncTask<String,Void,String> {
+    TextView textView;
+
+    public WeatherAsynTask(TextView textView) {
+        this.textView = textView;
+
+    }
+
+    @Override
+    public String doInBackground(String... params) {
+        String URL = params[0];
+        String EI = params[1];
+        String result = "";
+
+        try {
+            Document document = Jsoup.connect(URL).get();
+            /*Document document2 = Jsoup.connect(URL).post();
+            Connection.Response response = Jsoup.connect(URL).method(Connection.Method.GET).execute();
+            Document document3 = response.parse();*/
+            Elements elements = document.select(EI);
+
+            for (Element element : elements) {
+                String tem;
+                if (element != null) {
+                    tem = element.text();
+                    result=result+" "+tem;
+
+                }
+
+            }
+            return result;
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+    protected void onPostExecute(String s){
+        super.onPostExecute(s);
+        textView.setText(s);
+
+        Log.d("test",s);
+       String[] array_word;
+        array_word = s.split(" ");
+        for(int p=0;p<array_word.length;p++){
+            Log.d("test",array_word[p]) ;
+        }
     }
 }
 

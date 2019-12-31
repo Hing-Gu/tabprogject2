@@ -3,6 +3,7 @@ package com.example.tt;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.FrameLayout;
+import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -34,9 +35,7 @@ public class MainActivity extends AppCompatActivity {
         tab1=(TabItem)findViewById(R.id.tab1);
         tab2=(TabItem)findViewById(R.id.tab2);
         tab3=(TabItem)findViewById(R.id.tab3);
-//        frame = findViewById(R.id.frame);
 
-        //viewPager = findViewById(R.id.viewpager);
         mViewpager = (ViewPager) findViewById(R.id.frame);
         setupViewPager(mViewpager);
 
