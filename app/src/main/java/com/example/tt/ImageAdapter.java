@@ -24,6 +24,7 @@ import androidx.annotation.Nullable;
 import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 import static androidx.core.app.ActivityCompat.startActivityForResult;
 
@@ -40,6 +41,7 @@ public class ImageAdapter extends BaseAdapter {
     public ImageAdapter(Context context, String basepath){ // CustomGalleryAdapter의 생성자
         this.mContext = context;
         this.mBasePath = basepath;
+        String[] tmp_mimgs;
 
         File file = new File(mBasePath); // 지정 경로의 directory를 File 변수로 받아
         if(!file.exists()){
@@ -48,8 +50,20 @@ public class ImageAdapter extends BaseAdapter {
             }
         }
         Log.d(TAG, "basePath : " + mBasePath);
-        mImgs = file.list(); // file.list() method를 통해 directory 내 file 명들을 String[] 에 저장
-        Log.d(TAG, "length : " + mImgs.length);
+        tmp_mimgs = file.list(); // file.list() method를 통해 directory 내 file 명들을 String[] 에 저장
+//        Log.d(TAG, "length : " + mImgs.length);
+
+        ArrayList<String> filtered_list = new ArrayList<>();
+
+        for (String str : tmp_mimgs){
+            if (str.endsWith(".jpg") || str.endsWith(".png") || str.endsWith(".bmp")){
+                filtered_list.add(str);
+                Log.d(TAG, str);
+            }
+        }
+        Log.d(TAG, Integer.toString(filtered_list.size()));
+        mImgs = new String[filtered_list.size()];
+        mImgs = filtered_list.toArray(mImgs);
 
         /* 앞서 정의한 attrs.xml에서 gallery array의 배경 style attribute를 받아옴 */
         TypedArray array = mContext.obtainStyledAttributes(R.styleable.GalleryTheme);

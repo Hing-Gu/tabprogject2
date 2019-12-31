@@ -60,9 +60,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setupViewPager(ViewPager viewPager) {
-        adapter.addFragment(new tab1(), "추천");
-        adapter.addFragment(new tab2(), "오늘의 추천");
-        adapter.addFragment(new tab3(), "최근 등록");
+        adapter.addFragment(new tab1(), "Tel");
+        adapter.addFragment(new tab2(), "Gallery");
+        adapter.addFragment(new tab3(), "Weather");
         viewPager.setAdapter(adapter);
     }
 }
