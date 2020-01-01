@@ -1,10 +1,6 @@
-package com.example.tt;
+package com.example.tt.tab2;
 
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,18 +9,12 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.UiThread;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.tt.R;
 import com.example.tt.helper.Utils;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 
 
 public class tab2_photo extends Fragment {
@@ -32,7 +22,7 @@ public class tab2_photo extends Fragment {
     private ImageButton exit;
     private ViewPager viewPager;
     private int position;
-    private ImageAdapter ImageAdapter;
+    private com.example.tt.tab2.ImageAdapter ImageAdapter;
     public static final String ARG_OBJECT = "object";
 
     public tab2_photo(int img, ImageAdapter imageAdapter) {

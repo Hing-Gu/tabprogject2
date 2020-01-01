@@ -1,4 +1,4 @@
-package com.example.tt;
+package com.example.tt.tab1;
 
 
 import android.annotation.SuppressLint;
@@ -26,6 +26,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.SimpleAdapter;
 import android.widget.ListView;
+
+import com.example.tt.R;
 
 public class tab1 extends Fragment{
 
@@ -71,28 +73,9 @@ public class tab1 extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-
-
-
         View view= inflater.inflate(R.layout.fragment_tab1, container, false);
         List<PhoneBook> datas = new ArrayList<>();
         List<HashMap<String, String>> datas2 = new ArrayList<>();
-
-
-        ////////////////////////////////////////////////200101/////////////////////////////////////////// <permission 권한 줬음>
-        //https://itlove.tistory.com/406 (참고)
-        Button button = null; //얘를 list view에 하나씩 넣어야 함..........
-        button = (Button) view.findViewById(R.id.btn); //button id를 넣어야 하는데 listview에 버튼 넣는 법을 모르겠음  (https://gusfree.tistory.com/740)
-        button.setOnClickListener(new View.OnClickListener() { //버튼이 클릭 됐을 때
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("tel:01034778221"));  //파싱? 해당 번호로 전화거는 기능을 가진 intent 생성
-                startActivity(intent); //intent 실행
-            }
-        });
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
 
 
         // 1. Resolver 가져오기(데이터베이스 열어주기)
@@ -111,8 +94,6 @@ public class tab1 extends Fragment{
                 ,  ContactsContract.CommonDataKinds.Phone.NUMBER};
 
         // 4. ContentResolver로 쿼리를 날림 -> resolver 가 provider 에게 쿼리하겠다고 요청
-
-
         Cursor cursor = resolver.query(phoneUri, projection, null, null, null);
 
         // 4. 커서로 리턴된다. 반복문을 돌면서 cursor 에 담긴 데이터를 하나씩 추출
@@ -159,8 +140,22 @@ public class tab1 extends Fragment{
         }
         cursor.close();
 
+
+        ////////////////////////////////////////////////200101/////////////////////////////////////////// <permission 권한 줬음>
+        //https://itlove.tistory.com/406 (참고)
+//        Button button = null; //얘를 list view에 하나씩 넣어야 함..........
+//        button = view.findViewById(R.id.btn); //button id를 넣어야 하는데 listview에 버튼 넣는 법을 모르겠음  (https://gusfree.tistory.com/740)
+//        button.setOnClickListener(new View.OnClickListener() { //버튼이 클릭 됐을 때
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("tel:01034778221"));  //파싱? 해당 번호로 전화거는 기능을 가진 intent 생성
+//                startActivity(intent); //intent 실행
+//            }
+//        });
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         ListView MyListView = view.findViewById(R.id.list);
-        SimpleAdapter adapter = new SimpleAdapter(getActivity(), datas2,R.layout.textview,new String[]{"name","Tel"},new int[]{R.id.textView2,R.id.textView3});
+        SimpleAdapter adapter = new SimpleAdapter(getActivity(), datas2, R.layout.textview, new String[]{"name", "Tel"}, new int[]{R.id.textView2, R.id.textView3});
         MyListView.setAdapter(adapter);
         return view;
     }

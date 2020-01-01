@@ -24,7 +24,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.tt.FullScreenViewActivity"
+            android:name="com.example.tt.tab2.FullScreenViewActivity"
             android:theme="@android:style/Theme.Holo.NoActionBar"></activity>
     </application>
     <uses-permission android:name="android.permission.INTERNET"/>

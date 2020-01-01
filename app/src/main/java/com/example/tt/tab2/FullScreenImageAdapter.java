@@ -1,4 +1,4 @@
-package com.example.tt;
+package com.example.tt.tab2;
 
 
 import java.io.File;
@@ -21,6 +21,7 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.tt.R;
 import com.ortiz.touchview.TouchImageView;
 
 public class FullScreenImageAdapter extends PagerAdapter {
