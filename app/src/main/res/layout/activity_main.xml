@@ -36,12 +36,10 @@
             android:text="Weather" />
     </com.google.android.material.tabs.TabLayout>
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/frame"
+    <FrameLayout
+        android:id="@+id/outerfragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background= "#FFF0DE"
-        >
-    </androidx.viewpager.widget.ViewPager>
-
+        android:background= "#FFF0DE">
+    </FrameLayout>
 </LinearLayout>

@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.tt.tab1.tab1;
+import com.example.tt.tab1.tab1_addcontacts;
 import com.example.tt.tab2.tab2;
 import com.example.tt.tab3.tab3;
 import com.google.android.material.tabs.TabItem;
@@ -29,8 +30,6 @@ public class MainActivity extends AppCompatActivity {
     @SuppressWarnings("ClickableViewAccessibility")
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,23 +43,16 @@ public class MainActivity extends AppCompatActivity {
                 new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission_group.CONTACTS},1);
 
 
-        mViewpager = findViewById(R.id.frame);
-        setupViewPager(mViewpager);
+//        mViewpager = findViewById(R.id.frame);
 
-        tabLayout.setupWithViewPager(mViewpager);
+//        tabLayout.setupWithViewPager(mViewpager);
 
 
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
-        fragmentTransaction.add(R.id.frame, new tab1());
+//        fragmentTransaction.add(R.id.frame, new tab1());
+        fragmentTransaction.add(R.id.outerfragment, new fragment_viewpager());
         fragmentTransaction.commit();
-    }
-
-    public void setupViewPager(ViewPager viewPager) {
-        adapter.addFragment(new tab1(), "Tel");
-        adapter.addFragment(new tab2(), "Gallery");
-        adapter.addFragment(new tab3(), "Weather");
-        viewPager.setAdapter(adapter);
     }
 }
 

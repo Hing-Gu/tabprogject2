@@ -1,5 +1,7 @@
 package com.example.tt;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -17,19 +19,22 @@ public class SectionPageAdapter extends FragmentPagerAdapter {
         mFragmentList.add(fragment);
         mFragmentTitleList.add(title);
     }
+
     public CharSequence getPageTitle(int position) {
         return mFragmentTitleList.get(position);
     }
     public SectionPageAdapter(FragmentManager fm){
+
         super(fm);
     }
     @Override
-    public Fragment getItem(int position) { return mFragmentList.get(position); }
+    public Fragment getItem(int position) {
+        return mFragmentList.get(position);
+    }
 
     @Override
     public int getCount() {
         return mFragmentList.size() ;
     }
-
 
 }

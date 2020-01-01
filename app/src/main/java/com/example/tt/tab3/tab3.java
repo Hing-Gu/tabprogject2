@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tt.R;
+import com.example.tt.SectionPageAdapter;
 
 import android.graphics.Typeface;
 
