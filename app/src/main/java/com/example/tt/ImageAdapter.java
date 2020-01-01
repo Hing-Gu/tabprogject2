@@ -21,6 +21,8 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 
+import com.example.tt.helper.Utils;
+
 import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -33,52 +35,53 @@ public class ImageAdapter extends BaseAdapter {
     int CustomGalleryItemBg; // 앞서 정의해 둔 attrs.xml의 resource를 background로 받아올 변수 선언
     String mBasePath; // CustomGalleryAdapter를 선언할 때 지정 경로를 받아오기 위한 변수
     Context mContext; // CustomGalleryAdapter를 선언할 때 해당 activity의 context를 받아오기 위한 context 변수
-    String[] mImgs; // 위 mBasePath내의 file list를 String 배열로 저장받을 변수
+    ArrayList<String> mImgs; // 위 mBasePath내의 file list를 String 배열로 저장받을 변수
     Bitmap bm; // 지정 경로의 사진을 Bitmap으로 받아오기 위한 변수
 
     public String TAG = "Gallery Adapter Example :: ";
 
-    public ImageAdapter(Context context, String basepath){ // CustomGalleryAdapter의 생성자
+    public ImageAdapter(Context context){ // CustomGalleryAdapter의 생성자
         this.mContext = context;
-        this.mBasePath = basepath;
+//        this.mBasePath = basepath;
         String[] tmp_mimgs;
-
-        File file = new File(mBasePath); // 지정 경로의 directory를 File 변수로 받아
-        if(!file.exists()){
-            if(!file.mkdirs()){
-                Log.e(TAG, "failed to create directory");
-            }
-        }
-        Log.d(TAG, "basePath : " + mBasePath);
-        tmp_mimgs = file.list(); // file.list() method를 통해 directory 내 file 명들을 String[] 에 저장
-//        Log.d(TAG, "length : " + mImgs.length);
-
-        ArrayList<String> filtered_list = new ArrayList<>();
-
-        for (String str : tmp_mimgs){
-            if (str.endsWith(".jpg") || str.endsWith(".png") || str.endsWith(".bmp")){
-                filtered_list.add(str);
-                Log.d(TAG, str);
-            }
-        }
-        Log.d(TAG, Integer.toString(filtered_list.size()));
-        mImgs = new String[filtered_list.size()];
-        mImgs = filtered_list.toArray(mImgs);
-
-        /* 앞서 정의한 attrs.xml에서 gallery array의 배경 style attribute를 받아옴 */
-        TypedArray array = mContext.obtainStyledAttributes(R.styleable.GalleryTheme);
-        CustomGalleryItemBg = array.getResourceId(R.styleable.GalleryTheme_android_galleryItemBackground, 0);
-        array.recycle();
+        Utils utils = new Utils(context);
+        mImgs = utils.getFilePaths();
+//        File file = new File(mBasePath); // 지정 경로의 directory를 File 변수로 받아
+//        if(!file.exists()){
+//            if(!file.mkdirs()){
+//                Log.e(TAG, "failed to create directory");
+//            }
+//        }
+//        Log.d(TAG, "basePath : " + mBasePath);
+//        tmp_mimgs = file.list(); // file.list() method를 통해 directory 내 file 명들을 String[] 에 저장
+////        Log.d(TAG, "length : " + mImgs.length);
+//
+//        ArrayList<String> filtered_list = new ArrayList<>();
+//
+//        for (String str : tmp_mimgs){
+//            if (str.endsWith(".jpg") || str.endsWith(".png") || str.endsWith(".jpeg")){
+//                filtered_list.add(mBasePath + File.separator+str);
+//                Log.d(TAG, str);
+//            }
+//        }
+//        Log.d(TAG, Integer.toString(filtered_list.size()));
+//        mImgs = new String[filtered_list.size()];
+//        mImgs = filtered_list.toArray(mImgs);
+//
+//        /* 앞서 정의한 attrs.xml에서 gallery array의 배경 style attribute를 받아옴 */
+//        TypedArray array = mContext.obtainStyledAttributes(R.styleable.GalleryTheme);
+//        CustomGalleryItemBg = array.getResourceId(R.styleable.GalleryTheme_android_galleryItemBackground, 0);
+//        array.recycle();
     }
 
     @Override
     public int getCount() { // Gallery array의 객체 갯수를 앞서 세어 둔 file.list()를 받은 String[]의 원소 갯수와 동일하다는 가정 하에 반환
-        return mImgs.length;
+        return mImgs.size();
     }
 
     @Override
     public Object getItem(int position) { // Gallery array의 해당 position을 반환
-        return position;
+        return mImgs.get(position); // String value
     }
 
     @Override
@@ -86,6 +89,13 @@ public class ImageAdapter extends BaseAdapter {
         return position;
     }
 
+    public String getmBasePath(){
+        return mBasePath;
+    }
+
+    public ArrayList<String> getmImgs(){
+        return mImgs;
+    }
 
     // Override this method according to your need
     // 지정 경로 내 사진들을 보여주는 method.
@@ -101,12 +111,38 @@ public class ImageAdapter extends BaseAdapter {
         } else {
             imageView = (ImageView) convertView;
         }
-        bm = BitmapFactory.decodeFile(mBasePath + File.separator + mImgs[position]);
+        ///////
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+
+        int width = options.outWidth;
+        int height = options.outHeight;
+        int inSampleSize = 1;
+        int reqWidth = 256;
+        int reqHeight = 192;
+        if((width > reqWidth) || (height > reqHeight)){
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
+
+            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
+            // height and width larger than the requested height and width.
+            while ((halfHeight / inSampleSize) > reqHeight
+                    && (halfWidth / inSampleSize) > reqWidth) {
+                inSampleSize *= 2;
+            }
+        }
+        options.inSampleSize = inSampleSize;
+        options.inJustDecodeBounds = false;
+        //////
+
+
+//        bm = BitmapFactory.decodeFile(mBasePath + File.separator + mImgs[position]);
+        bm = BitmapFactory.decodeFile(mImgs.get(position));
         Bitmap mThumbnail = ThumbnailUtils.extractThumbnail(bm, 250, 250);
         imageView.setPadding(8, 8, 8, 8);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        imageView.setLayoutParams(new GridView.LayoutParams(250, 250));
-//        imageView.setLayoutParams(new GridView.LayoutParams(GridView.LayoutParams.WRAP_CONTENT, GridView.LayoutParams.WRAP_CONTENT));
+//        imageView.setLayoutParams(new GridView.LayoutParams(250, 250));
+        imageView.setLayoutParams(new GridView.LayoutParams(GridView.LayoutParams.WRAP_CONTENT, GridView.LayoutParams.WRAP_CONTENT));
         imageView.setImageBitmap(mThumbnail);
         return imageView;
 

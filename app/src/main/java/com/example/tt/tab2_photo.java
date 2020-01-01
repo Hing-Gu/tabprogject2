@@ -1,18 +1,30 @@
 package com.example.tt;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.UiThread;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
+
+import com.example.tt.helper.Utils;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 
 public class tab2_photo extends Fragment {
@@ -37,27 +49,32 @@ public class tab2_photo extends Fragment {
         int image_value = 0;
 
         viewPager = v.findViewById(R.id.pager);
-        SectionPageAdapter adapter = new SectionPageAdapter(getActivity().getSupportFragmentManager());
+        ImageView imgDisplay;
+        Button btnClose;
+        Utils utils = new Utils(getActivity());
 
-//        selected_image = v.findViewById(R.id.selected_photo);
-//        selected_image.setImageResource((int) ImageAdapter.getItem(position));
-//        selected_image.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+//        viewPager.addView(viewLayout);
+        FullScreenImageAdapter adapter = new FullScreenImageAdapter(getActivity(), utils.getFilePaths());
+        Log.d("Tab2 photo","hmmm");
+        viewPager.setAdapter(adapter);
+        Log.d("Tab2 photo","wellll");
+//        return viewLayout;
 
-//        exit = v.findViewById(R.id.exitbtn);
-//
-//        exit.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View v){
-//                FragmentManager fm = getActivity().getSupportFragmentManager();
-////                FragmentTransaction fragmentTransaction = fm.beginTransaction();
-//                fm.popBackStack();
-////                fragmentTransaction.replace();
-//            }
-//        });
+        exit = v.findViewById(R.id.exitbtn);
+
+        exit.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                FragmentManager fm = getActivity().getSupportFragmentManager();
+//                FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                fm.popBackStack();
+//                fragmentTransaction.replace();
+            }
+        });
         return v;
     }
 }
-//
+
 //
 //
 //

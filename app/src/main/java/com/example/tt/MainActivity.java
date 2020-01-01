@@ -43,9 +43,9 @@ public class MainActivity extends AppCompatActivity {
         tab3 = findViewById(R.id.tab3);
 
         ActivityCompat.requestPermissions(this,
-                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
+                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission_group.CONTACTS},1);
         ActivityCompat.requestPermissions(this,
-                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},1);
+                new String[]{},1);
 
         mViewpager = findViewById(R.id.frame);
         setupViewPager(mViewpager);
