@@ -26,6 +26,8 @@ import com.android.volley.toolbox.Volley;
 import com.example.tt.R;
 import com.example.tt.helper.Utils;
 
+import org.w3c.dom.Text;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -51,11 +53,26 @@ class weather {
         Log.d("basedate",base_date);
         base_time = array[1].substring(0,2) + "00";
         if (Integer.parseInt(base_time) - 100 < 0){
-            base_time = Integer.toString(Integer.parseInt(base_time) - 100 + 2400);
+            if (Integer.parseInt(base_time) - 100 + 2400 == 0){
+                base_time = "0000";
+
+            }
+            else{
+                base_time = Integer.toString(Integer.parseInt(base_time) - 100 + 2400);
+            }
+
             base_date = Integer.toString(Integer.parseInt(base_date) - 1);
         }
         else{
-            base_time = Integer.toString(Integer.parseInt(base_time) - 100);
+            if (Integer.parseInt(base_time) - 100 == 0){
+                base_time = "0000";
+            }
+            else{
+                base_time = Integer.toString(Integer.parseInt(base_time) - 100);
+                if (base_time.length() == 3){
+                    base_time = "0" + base_time;
+                }
+            }
         }
         mContext = context;
         fragment_view = view;
@@ -77,10 +94,10 @@ class weather {
 
         base_date = Integer.toString(days);
         base_time = Integer.toString(time);
-        getinfo(global_nx, global_ny);
+//        getinfo(global_nx, global_ny);
     }
 
-    public void getinfo(String nx, String ny){
+    public void getinfo(String nx, String ny, final String city, final String sector){
         global_nx = nx;
         global_ny = ny;
 
@@ -107,7 +124,7 @@ class weather {
 //                        getinfo_past();
                     }
                     else{
-                        setView(data);
+                        setView(data, city, sector);
                     }
 
                 }
@@ -139,7 +156,7 @@ class weather {
 
     }
 
-    private void setView(HashMap<String, String> data){
+    private void setView(HashMap<String, String> data, String city, String sector){
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(mContext.LAYOUT_INFLATER_SERVICE);
         View popupView = inflater.inflate(R.layout.fragment3_popup, null);
         Utils utils = new Utils(mContext);
@@ -149,11 +166,13 @@ class weather {
 
         ImageView weathericon = popupView.findViewById(R.id.weathericon);
         TextView amount_rain= popupView.findViewById(R.id.amount_rain);
-        TextView type_rain= popupView.findViewById(R.id.type_rain);
-        TextView wind_mag= popupView.findViewById(R.id.wind_mag);
         TextView wind_dir= popupView.findViewById(R.id.wind_dir);
         TextView humidity= popupView.findViewById(R.id.humidity);
         TextView temp = popupView.findViewById(R.id.temp);
+        TextView cit1 = popupView.findViewById(R.id.city1);
+        TextView cit2 = popupView.findViewById(R.id.city2);
+
+
         int direction;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmm", Locale.KOREA);
         String Date_time = sdf.format(new Date());
@@ -170,6 +189,8 @@ class weather {
 
         mPopupWindow.showAtLocation(popupView, Gravity.CENTER, 0, 0);
 
+        cit1.setText(city);
+        cit2.setText(sector);
 
         Button ok = popupView.findViewById(R.id.okbtn);
         ok.setOnClickListener(new View.OnClickListener() {
@@ -207,16 +228,16 @@ class weather {
                     }
                     break;
                 case "REH" :
-                    humidity.setText("humidity : " + data.get(key));
+                    humidity.setText("습도 : " + data.get(key)+"%");
                     break;
                 case "RN1" :
-                    amount_rain.setText("raining magnitude : " + data.get(key));
+                    amount_rain.setText("강수량 : " + data.get(key)+"mm/h");
                     break;
                 case "WSD" :
-                    wind_dir.setText("wind speed : " + data.get(key));
+                    wind_dir.setText("풍속 : " + data.get(key)+"m/s");
                     break;
                 case "T1H" :
-                    temp.setText("temp : " + data.get(key));
+                    temp.setText("기온 : " + data.get(key)+"ºC");
                     break;
             }
         }

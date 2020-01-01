@@ -33,7 +33,7 @@ class location{
     }
 
     private HashMap<Pair<String, String>, Pair<String,String>> makeLocationList(){
-        try{
+            try{
             AssetManager am = mContext.getAssets();
             StringBuilder returnString = new StringBuilder();
             InputStream fIn = null;
@@ -106,7 +106,7 @@ class location{
         if (!getCity().equals("")){
             Pair<String, String> location = getLocationList().get(Pair.create(getCity(),getSector()));
             Log.d("tab3","hello");
-            cur_weather.getinfo(location.first, location.second);
+            cur_weather.getinfo(location.first, location.second, getCity(), getSector());
             Log.d("tab3","gello");
         }
     }
