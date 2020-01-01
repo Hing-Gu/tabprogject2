@@ -141,4 +141,38 @@ public class ListViewAdapter extends BaseAdapter {
 
         return data2;
     }
+
+    // 성명 포함 연락처 삭제 (구현 완료)
+//    public void deleteContactFromNameLIKE(String display_name) {
+    public void deleteContactFromNameLIKE(int id) {
+        String display_name = Contacts.get(id).get("name");
+        ContentResolver contactHelper = mContext.getContentResolver();
+        System.out.println("Contact Name Search : " + display_name);
+        Uri contactUri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
+        String[] projection = {ContactsContract.CommonDataKinds.Phone.CONTACT_ID, ContactsContract.CommonDataKinds.Phone.NUMBER}; // 검색
+        String where = ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME + " like \'%" + display_name + "%\'";
+        String sortOrder = ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME + " ASC";
+        Cursor cursor = null;
+        try {
+            if (display_name != null && !display_name.equals("")) {
+                cursor = contactHelper.query(contactUri, projection, where, null, sortOrder);
+                if (cursor.moveToFirst()) {
+                    int count = 0;
+                    do {
+                        long rawContactId = cursor.getLong(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.CONTACT_ID));
+                        contactHelper.delete(ContactsContract.RawContacts.CONTENT_URI, ContactsContract.RawContacts.CONTACT_ID + "=" + rawContactId,null);
+                        count++;
+                    } while (cursor.moveToNext());
+                    System.out.println("Delete Contact Number Count = " + count);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if(cursor != null) {
+                cursor.close();
+                notifyDataSetChanged();
+            }
+        }
+    }
 }

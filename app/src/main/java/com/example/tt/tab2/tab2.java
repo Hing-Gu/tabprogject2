@@ -70,15 +70,6 @@ public class tab2 extends Fragment {
                 Intent i = new Intent(activity, FullScreenViewActivity.class);
                 i.putExtra("position", position);
                 activity.startActivity(i);
-//                FragmentManager fm = getActivity().getSupportFragmentManager();
-//                FragmentTransaction fragmentTransaction = fm.beginTransaction();
-//                //Casting getitem value to integer -> can be vulnerable.
-//                Fragment newFragment = new tab2_photo(position, imgAdapter);
-////                FragmentStatePagerAdapter swipe = DemoCollectionPagerAdapter(fm);
-//
-//                fragmentTransaction.replace(R.id.frame, newFragment);
-//                fragmentTransaction.addToBackStack(null);
-//                fragmentTransaction.commit();
             }
         });
 //        return inflater.inflate(R.layout.fragment_tab2, container, false);
