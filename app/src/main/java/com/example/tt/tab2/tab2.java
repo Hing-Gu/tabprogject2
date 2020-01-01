@@ -148,17 +148,25 @@ public class tab2 extends Fragment {
         return image;
     }
 
-    public void onActivityResult( int requestCode, int resultCode, Intent data )
+    public void onActivityResult( int requestCode, int resultCode, Intent data)
     {
         if( resultCode == RESULT_OK )
         {
 // 카메라로 찍었을 떄
             if( requestCode == TAKE_CAMERA ) //1
             {
-                if( data == null) return ;
+                if( data == null) {
+                    Log.e("BB","AAAABBBAA");
+                    imgAdapter.updateData();
+                    imgAdapter.notifyDataSetChanged();
+                    return ;
+                }
 
 // 찍은 사진을 이미지뷰에 보여준다.
+                Log.e("AAAAA","AAAAAA");
+                imgAdapter.updateData();
                 imgAdapter.notifyDataSetChanged();
+                gridView.setAdapter(imgAdapter);
             }
 
 // 앨범에서 가져올 때

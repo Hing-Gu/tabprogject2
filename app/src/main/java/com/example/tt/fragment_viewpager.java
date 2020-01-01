@@ -60,7 +60,7 @@ public class fragment_viewpager extends Fragment{
         FragmentManager fm = getActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
 //        fragmentTransaction.add(R.id.frame, new tab1());
-        fragmentTransaction.add(R.id.frame, new tab1());
+        fragmentTransaction.replace(R.id.frame, new tab1());
         fragmentTransaction.commit();
 
         return view;

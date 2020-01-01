@@ -123,6 +123,7 @@ public class ImageAdapter extends BaseAdapter {
         imageView.setImageBitmap(mThumbnail);
         return imageView;
     }
+
     @Override
     public void registerDataSetObserver(DataSetObserver observer){ // DataSetObserver의 등록(연결)
         mDataSetObservable.registerObserver(observer);
@@ -137,5 +138,8 @@ public class ImageAdapter extends BaseAdapter {
     public void notifyDataSetChanged(){ // 위에서 연결된 DataSetObserver를 통한 변경 확인
         mDataSetObservable.notifyChanged();
     }
-
+    public void updateData(){
+        mImgs = new Utils(mContext).getFilePaths();
+        notifyDataSetChanged();
+    }
 }
