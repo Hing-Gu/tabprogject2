@@ -43,31 +43,3 @@ public class FullScreenViewActivity extends Activity {
         viewPager.setCurrentItem(pos);
     }
 }
-
-//public class FullScreenViewActivity extends Activity {
-//
-//    private Utils utils;
-//    private FullScreenImageAdapter adapter;
-//    private ViewPager viewPager;
-//
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.fragment_tab2_photo);
-//
-//        viewPager = (ViewPager) findViewById(R.id.pager);
-//
-//        utils = new Utils(getApplicationContext());
-//
-//        Intent i = getIntent();
-//        int position = i.getIntExtra("position", 0);
-//
-//        adapter = new FullScreenImageAdapter(FullScreenViewActivity.this,
-//                utils.getFilePaths());
-//
-//        viewPager.setAdapter(adapter);
-//
-//        // displaying selected image first
-//        viewPager.setCurrentItem(position);
-//    }
-//}

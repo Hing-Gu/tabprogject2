@@ -21,6 +21,8 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.ortiz.touchview.TouchImageView;
+
 public class FullScreenImageAdapter extends PagerAdapter {
 
     private Activity _activity;
@@ -47,7 +49,7 @@ public class FullScreenImageAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        ImageView imgDisplay;
+        TouchImageView imgDisplay;
         Button btnClose;
 
         inflater = (LayoutInflater) _activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -61,6 +63,7 @@ public class FullScreenImageAdapter extends PagerAdapter {
         options.inPreferredConfig = Bitmap.Config.ARGB_8888;
         Log.d("FullScreenImageAdapter",_imagePaths.get(position));
         Bitmap bitmap = BitmapFactory.decodeFile(_imagePaths.get(position), options);
+        imgDisplay.setScaleType(ImageView.ScaleType.FIT_CENTER);
         imgDisplay.setImageBitmap(bitmap);
 
 
