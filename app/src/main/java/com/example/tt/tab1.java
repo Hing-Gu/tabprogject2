@@ -1,6 +1,8 @@
 package com.example.tt;
 
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,11 +17,13 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
+import android.Manifest;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.SimpleAdapter;
 import android.widget.ListView;
 
@@ -60,15 +64,35 @@ public class tab1 extends Fragment{
         }
 
     }
+
+
+    @SuppressLint("WrongViewCast")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
 
+
+
         View view= inflater.inflate(R.layout.fragment_tab1, container, false);
-        tab1 context=this;
         List<PhoneBook> datas = new ArrayList<>();
         List<HashMap<String, String>> datas2 = new ArrayList<>();
+
+
+        ////////////////////////////////////////////////200101/////////////////////////////////////////// <permission 권한 줬음>
+        //https://itlove.tistory.com/406 (참고)
+        Button button = null; //얘를 list view에 하나씩 넣어야 함..........
+        button = (Button) view.findViewById(R.id.btn); //button id를 넣어야 하는데 listview에 버튼 넣는 법을 모르겠음  (https://gusfree.tistory.com/740)
+        button.setOnClickListener(new View.OnClickListener() { //버튼이 클릭 됐을 때
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("tel:01034778221"));  //파싱? 해당 번호로 전화거는 기능을 가진 intent 생성
+                startActivity(intent); //intent 실행
+            }
+        });
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 
 
         // 1. Resolver 가져오기(데이터베이스 열어주기)
