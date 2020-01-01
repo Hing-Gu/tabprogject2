@@ -158,7 +158,6 @@ public class tab2 extends Fragment {
                 if( data == null) return ;
 
 // 찍은 사진을 이미지뷰에 보여준다.
-//                Bitmap bm = (Bitmap) data.getExtras().get( "data" );
                 imgAdapter.notifyDataSetChanged();
             }
 

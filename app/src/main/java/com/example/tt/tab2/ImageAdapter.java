@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.database.Cursor;
+import android.database.DataSetObservable;
+import android.database.DataSetObserver;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.ThumbnailUtils;
@@ -37,6 +39,7 @@ public class ImageAdapter extends BaseAdapter {
     Context mContext; // CustomGalleryAdapter를 선언할 때 해당 activity의 context를 받아오기 위한 context 변수
     ArrayList<String> mImgs; // 위 mBasePath내의 file list를 String 배열로 저장받을 변수
     Bitmap bm; // 지정 경로의 사진을 Bitmap으로 받아오기 위한 변수
+    DataSetObservable mDataSetObservable = new DataSetObservable();
 
     public String TAG = "Gallery Adapter Example :: ";
 
@@ -46,32 +49,6 @@ public class ImageAdapter extends BaseAdapter {
         String[] tmp_mimgs;
         Utils utils = new Utils(context);
         mImgs = utils.getFilePaths();
-//        File file = new File(mBasePath); // 지정 경로의 directory를 File 변수로 받아
-//        if(!file.exists()){
-//            if(!file.mkdirs()){
-//                Log.e(TAG, "failed to create directory");
-//            }
-//        }
-//        Log.d(TAG, "basePath : " + mBasePath);
-//        tmp_mimgs = file.list(); // file.list() method를 통해 directory 내 file 명들을 String[] 에 저장
-////        Log.d(TAG, "length : " + mImgs.length);
-//
-//        ArrayList<String> filtered_list = new ArrayList<>();
-//
-//        for (String str : tmp_mimgs){
-//            if (str.endsWith(".jpg") || str.endsWith(".png") || str.endsWith(".jpeg")){
-//                filtered_list.add(mBasePath + File.separator+str);
-//                Log.d(TAG, str);
-//            }
-//        }
-//        Log.d(TAG, Integer.toString(filtered_list.size()));
-//        mImgs = new String[filtered_list.size()];
-//        mImgs = filtered_list.toArray(mImgs);
-//
-//        /* 앞서 정의한 attrs.xml에서 gallery array의 배경 style attribute를 받아옴 */
-//        TypedArray array = mContext.obtainStyledAttributes(R.styleable.GalleryTheme);
-//        CustomGalleryItemBg = array.getResourceId(R.styleable.GalleryTheme_android_galleryItemBackground, 0);
-//        array.recycle();
     }
 
     @Override
@@ -146,115 +123,19 @@ public class ImageAdapter extends BaseAdapter {
         imageView.setImageBitmap(mThumbnail);
         return imageView;
     }
+    @Override
+    public void registerDataSetObserver(DataSetObserver observer){ // DataSetObserver의 등록(연결)
+        mDataSetObservable.registerObserver(observer);
+    }
+
+    @Override
+    public void unregisterDataSetObserver(DataSetObserver observer){ // DataSetObserver의 해제
+        mDataSetObservable.unregisterObserver(observer);
+    }
+
+    @Override
+    public void notifyDataSetChanged(){ // 위에서 연결된 DataSetObserver를 통한 변경 확인
+        mDataSetObservable.notifyChanged();
+    }
+
 }
-
-
-
-//
-//public class ImageAdapter extends BaseAdapter {
-//    private Context mContext;
-//    private ArrayList<String> pathList;
-//    static final int GALLERY_REQUEST_CODE = 1;
-//    String imgDecodableString;
-//    // Keep all Images in array
-////    public Integer[] mThumbIds = {
-////            R.drawable.maxresdefault , R.drawable.cross
-////            ,R.drawable.maxresdefault, R.drawable.cross
-////            ,R.drawable.maxresdefault, R.drawable.maxresdefault
-////            ,R.drawable.maxresdefault, R.drawable.maxresdefault
-////            ,R.drawable.maxresdefault, R.drawable.maxresdefault
-////            ,R.drawable.maxresdefault, R.drawable.maxresdefault
-////            ,R.drawable.maxresdefault, R.drawable.maxresdefault
-////            ,R.drawable.maxresdefault, R.drawable.maxresdefault
-////            ,R.drawable.maxresdefault, R.drawable.maxresdefault
-////            ,R.drawable.maxresdefault, R.drawable.maxresdefault
-////            ,R.drawable.maxresdefault, R.drawable.maxresdefault
-////            ,R.drawable.maxresdefault, R.drawable.maxresdefault
-////
-////    };
-//
-//    // Constructor
-//    public ImageAdapter(Context c){
-//
-//        mContext = c;
-//        pathList = getImagesPath(mContext);
-//    }
-//
-//    public static ArrayList<String> getImagesPath(Context context) {
-//        Uri uri;
-//        ArrayList<String> listOfAllImages = new ArrayList<String>();
-//        Cursor cursor;
-//        int column_index_data, column_index_folder_name;
-//        String PathOfImage = null;
-//        uri = android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-//
-//        String[] projection = {MediaStore.MediaColumns.DATA,
-//                MediaStore.Images.Media.BUCKET_DISPLAY_NAME};
-//        cursor = context.getContentResolver().query(uri, projection, null, null, null);
-//
-//        column_index_data = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
-//        column_index_folder_name = cursor
-//                .getColumnIndexOrThrow(MediaStore.Images.Media.BUCKET_DISPLAY_NAME);
-//
-////        cursor.moveToFirst();
-//
-//        while (cursor.moveToNext()) {
-//            PathOfImage = cursor.getString(column_index_data);
-//            listOfAllImages.add(PathOfImage);
-//        }
-//
-//        cursor.close();
-//        return listOfAllImages;
-//    }
-//
-//
-//    @Override
-//    public int getCount() {
-////        return mThumbIds.length;
-//        return pathList.size();
-//    }
-//
-//    @Override
-//    public Object getItem(int position) {
-////        try {
-////            return mThumbIds[position];
-////        }catch(Exception ArrayIndexOutOfBoundsExcetion){
-////            return -1;
-////        }
-//        return pathList.get(position);
-//    }
-//
-//    @Override
-//    public long getItemId(int position) {
-////        return 0;
-//        return position;
-////        return mThumbIds[position];
-//    }
-//
-//
-//    @Override
-//    public View getView(int position, View convertView, ViewGroup parent) {
-//        ImageView imageView = new ImageView(mContext);
-//        ArrayList<String> urilist = getImagesPath(mContext);
-//
-//        if (position < urilist.size()){
-//            Uri new_uri = Uri.parse(urilist.get(position));
-//            Log.d("ImageAdapter",urilist.get(position));
-//            imageView.setImageURI(Uri.parse(urilist.get(position)));
-//
-////            imageView.setImageResource(mThumbIds[position]);
-//            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-////        imageView.setLayoutParams(new GridView.LayoutParams(70, 70));
-//            imageView.setLayoutParams(new GridView.LayoutParams(250, 250));
-//        }
-//        else{
-//            Log.d("getView",Integer.toString(position));
-//        }
-////        imageView.setImageResource(mThumbIds[position]);
-//        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-////        imageView.setLayoutParams(new GridView.LayoutParams(70, 70));
-//        imageView.setLayoutParams(new GridView.LayoutParams(250, 250));
-//        return imageView;
-//    }
-//
-//}

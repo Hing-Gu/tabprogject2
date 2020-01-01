@@ -76,7 +76,4 @@ public class tab2_photo extends Fragment {
         return v;
     }
 
-    protected void onActivityResult(){
-
-    }
 }
