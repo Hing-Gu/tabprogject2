@@ -1,6 +1,7 @@
 package com.example.tt;
 
 import android.Manifest;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.FrameLayout;
 
@@ -20,7 +21,7 @@ import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity {
     private TabLayout tabLayout;
-    private TabItem tab1, tab2,  tab3;
+    private TabItem tab1, tab2, tab3;
     public SectionPageAdapter pagerAdapter;
     private FrameLayout frame;
     private ViewPager mViewpager;
@@ -40,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         tab3 = findViewById(R.id.tab3);
 
         ActivityCompat.requestPermissions(this,
-                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission_group.CONTACTS},1);
+                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission_group.CONTACTS}, 1);
 
 
 //        mViewpager = findViewById(R.id.frame);
@@ -54,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.add(R.id.outerfragment, new fragment_viewpager());
         fragmentTransaction.commit();
     }
+
 }
 
 

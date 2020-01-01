@@ -3,22 +3,35 @@ package com.example.tt.tab2;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
 
 import com.example.tt.R;
 import com.example.tt.SectionPageAdapter;
 import com.example.tt.helper.AppConstant;
+import com.example.tt.helper.Utils;
 
 import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
+import static android.app.Activity.RESULT_OK;
 
 
 /**
@@ -29,6 +42,10 @@ public class tab2 extends Fragment {
     private GridView gridView;
     final int REQUEST_TAKE_ALBUM = 1;
     String basePath = null;
+    final int TAKE_CAMERA = 2;
+    final int TAKE_GALLERY = 3;
+    private Button camera;
+    String currentPhotoPath = null;
 
 
     public tab2() {
@@ -54,9 +71,10 @@ public class tab2 extends Fragment {
         }
         basePath = directory.getPath();
 
-
+        camera = v.findViewById(R.id.takepicbtn);
         imgAdapter = new ImageAdapter(getContext().getApplicationContext());
         gridView.setAdapter(imgAdapter);
+        final Utils utils = new Utils(getActivity());
 
         //Set activity to send parameter to event listener
         final Activity activity = getActivity();
@@ -72,10 +90,97 @@ public class tab2 extends Fragment {
                 activity.startActivity(i);
             }
         });
+
+        camera.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                // Ensure that there's a camera activity to handle the intent
+                if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+                    // Create the File where the photo should go
+                    File photoFile = null;
+                    try {
+                        photoFile = createImageFile();
+                    } catch (IOException ex) {
+                        // Error occurred while creating the File
+                    }
+                    // Continue only if the File was successfully created
+                    if (photoFile != null) {
+                        Uri photoURI = FileProvider.getUriForFile(getActivity(),
+                                "com.example.tt.fileprovider",
+                                photoFile);
+                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                        startActivityForResult(takePictureIntent, TAKE_CAMERA);
+                    }
+                }
+
+//                // 카메라 실행
+//                Intent it = new Intent( ) ;
+//                SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmm", Locale.KOREA);
+//                String Date_time = sdf.format(new Date());
+//                Log.d("path",Environment.getExternalStorageDirectory().getPath());
+////                File file = new File( Environment.getExternalStorageDirectory(), utils.getFilePaths()+ "/" + Date_time ) ;
+//                File file = new File(utils.getFilePaths()+ "/" + Date_time ) ;
+//                String tempPictuePath = file.getAbsolutePath( ) ;
+//                it.putExtra( MediaStore.EXTRA_OUTPUT, tempPictuePath ) ;
+//                it.setAction( MediaStore.ACTION_IMAGE_CAPTURE ) ; // 모든 단말에서 안될 수 있기 때문에 수정해야 함
+//
+//                startActivityForResult( it, TAKE_CAMERA ) ;
+            }
+        });
 //        return inflater.inflate(R.layout.fragment_tab2, container, false);
         return v;
     }
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = new File(basePath);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        currentPhotoPath = image.getAbsolutePath();
+        Log.d("AA",currentPhotoPath);
+        return image;
+    }
+
+    public void onActivityResult( int requestCode, int resultCode, Intent data )
+    {
+        if( resultCode == RESULT_OK )
+        {
+// 카메라로 찍었을 떄
+            if( requestCode == TAKE_CAMERA ) //1
+            {
+                if( data == null) return ;
+
+// 찍은 사진을 이미지뷰에 보여준다.
+//                Bitmap bm = (Bitmap) data.getExtras().get( "data" );
+                imgAdapter.notifyDataSetChanged();
+            }
+
+// 앨범에서 가져올 때
+//            else if( requestCode == TAKE_GALLERY ) //2
+//            {
+//                Uri currImageURI = data.getData( ) ;
+//                String path = getRealPathFromURI( currImageURI ) ;
+//                tempPictuePath = path ;
+//// 찍은 사진을 이미지뷰에 보여준다.
+//                setImage.setAlbumImage( path, ivCardImage ) ;
+//            }
+//        }
+            else
+            {
+                System.out.println( "camera return error" ) ;
+                return ;
+            }
+        }
+    }
 }
+
 
 
 

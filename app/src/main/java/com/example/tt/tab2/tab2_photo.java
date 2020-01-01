@@ -1,6 +1,9 @@
 package com.example.tt.tab2;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,11 +19,17 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.tt.R;
 import com.example.tt.helper.Utils;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 
 public class tab2_photo extends Fragment {
     private ImageView selected_image;
     private ImageButton exit;
     private ViewPager viewPager;
+
     private int position;
     private com.example.tt.tab2.ImageAdapter ImageAdapter;
     public static final String ARG_OBJECT = "object";
@@ -41,7 +50,7 @@ public class tab2_photo extends Fragment {
         viewPager = v.findViewById(R.id.pager);
         ImageView imgDisplay;
         Button btnClose;
-        Utils utils = new Utils(getActivity());
+        final Utils utils = new Utils(getActivity());
 
 //        viewPager.addView(viewLayout);
         FullScreenImageAdapter adapter = new FullScreenImageAdapter(getActivity(), utils.getFilePaths());
@@ -52,6 +61,7 @@ public class tab2_photo extends Fragment {
 
         exit = v.findViewById(R.id.exitbtn);
 
+
         exit.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -61,6 +71,12 @@ public class tab2_photo extends Fragment {
 //                fragmentTransaction.replace();
             }
         });
+
+
         return v;
+    }
+
+    protected void onActivityResult(){
+
     }
 }
