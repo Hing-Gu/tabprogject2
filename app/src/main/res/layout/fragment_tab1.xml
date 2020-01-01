@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:id="@+id/add_contact"
+        android:fontFamily="@font/nanumsquareroundb"
         android:text="전화번호부 추가"
         />
     <ListView

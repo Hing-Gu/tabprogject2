@@ -141,11 +141,16 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     >
+
                     <Button
-                        android:text="광역시/도"
+                        android:id="@+id/citybtn"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:id="@+id/citybtn"></Button>
+                        android:layout_height="128dp"
+                        android:background="#00FF0000"
+                        android:text="광역시/도"
+                        android:fontFamily="@font/nanumsquareroundb"
+                        android:textColor="#F3A266"
+                        android:textSize="30dp"></Button>
 
                 </LinearLayout>
                 <LinearLayout
@@ -153,11 +158,16 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     >
+
                     <Button
                         android:id="@+id/sectorbtn"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="시/구/군/면"></Button>
+                        android:layout_height="125dp"
+                        android:background="#00FF0000"
+                        android:text="시/구/군/면"
+                        android:fontFamily="@font/nanumsquareroundb"
+                        android:textSize="30dp"
+                        android:textColor="#F3A266"></Button>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
