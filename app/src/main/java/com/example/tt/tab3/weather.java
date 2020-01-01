@@ -68,7 +68,10 @@ class weather {
                 base_time = "0000";
             }
             else{
-                base_time = Integer.toString(Integer.parseInt(base_time) - 100 + 2400);
+                base_time = Integer.toString(Integer.parseInt(base_time) - 100);
+                if (base_time.length() == 3){
+                    base_time = "0" + base_time;
+                }
             }
         }
         mContext = context;
