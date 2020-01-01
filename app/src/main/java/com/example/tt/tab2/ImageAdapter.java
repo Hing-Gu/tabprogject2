@@ -145,7 +145,6 @@ public class ImageAdapter extends BaseAdapter {
         imageView.setLayoutParams(new GridView.LayoutParams(GridView.LayoutParams.WRAP_CONTENT, GridView.LayoutParams.WRAP_CONTENT));
         imageView.setImageBitmap(mThumbnail);
         return imageView;
-
     }
 }
 

@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".tab1.tab1">
+    tools:context=".tab1.tab1"
+    android:orientation="vertical">
 
     <!-- TODO: Update blank fragment layout -->
-
+    <Button
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/add_contact"
+        android:text="전화번호부 추가"
+        />
     <ListView
         android:id="@+id/list"
         android:layout_width="match_parent"
@@ -16,4 +22,4 @@
         >
     </ListView>
 
-</FrameLayout>
+</LinearLayout>

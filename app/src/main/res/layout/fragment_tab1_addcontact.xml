@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <EditText
+        android:id="@+id/Edit_name"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:inputType="textPersonName"
+        android:hint="이름"
+        android:textSize="20dp"
+        android:layout_margin="6dp"/>
+    <EditText
+        android:id="@+id/Edit_phone"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:inputType="phone"
+        android:hint="전화번호"
+        android:textSize="20dp"
+        android:layout_margin="6dp"/>
+    <EditText
+        android:id="@+id/Edit_email"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:inputType="textEmailAddress"
+        android:hint="이메일"
+        android:textSize="20dp"
+        android:layout_margin="6dp"/>
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_gravity="center">
+        <Button
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="확인"
+            android:id="@+id/fragment1_ok"
+            android:layout_gravity="start"
+            android:layout_marginLeft="70dp"/>
+        <Button
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="취소"
+            android:id="@+id/fragment1_cancel"
+            android:layout_gravity="end"
+            android:layout_marginLeft="100dp"/>
+    </LinearLayout>
+
+</LinearLayout>

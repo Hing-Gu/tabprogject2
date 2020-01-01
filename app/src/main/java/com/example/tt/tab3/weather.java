@@ -143,7 +143,9 @@ class weather {
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(mContext.LAYOUT_INFLATER_SERVICE);
         View popupView = inflater.inflate(R.layout.fragment3_popup, null);
         Utils utils = new Utils(mContext);
-
+        int phone_height = utils.getScreenHeight();
+        int phone_width = utils.getScreenWidth();
+        popupView.setLayoutParams(new LinearLayout.LayoutParams((int)(phone_width/1), (int)(phone_height/1)));
 
         ImageView weathericon = popupView.findViewById(R.id.weathericon);
         TextView amount_rain= popupView.findViewById(R.id.amount_rain);
@@ -174,6 +176,11 @@ class weather {
             @Override
             public void onClick(View v) {
                 mPopupWindow.dismiss();
+                Button city = fragment_view.findViewById(R.id.citybtn);
+                Button sector = fragment_view.findViewById(R.id.sectorbtn);
+                city.setText("광역시/도");
+
+                sector.setText("시/구/군/면");
             }
         });
 
